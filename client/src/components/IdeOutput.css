@@ -15,6 +15,15 @@
   margin: 0;
 }
 
+.output {
+  height: 100%;
+  background: #001528;
+}
+
+.spinner {
+  background: #001528;
+}
+
 .IdeOutput textarea {
   /* Firefox */
   height: -moz-calc(100% - 2rem);
@@ -38,11 +47,12 @@
   box-shadow: none;
   resize: none;
 }
-
-.IdeOutput .spinner-border {
-  position: relative;
-  align-items: center;
-  text-align: center;
-  top: 50%;
+/* 
+.IdeOutput .spinner {
+  color: white;
   left: 50%;
-}
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+} */

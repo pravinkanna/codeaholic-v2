@@ -31,7 +31,7 @@ class IdeEditor extends Component {
   };
 
   handleClick = () => {
-    this.props.runCode();
+    this.props.run();
   };
 
   componentDidUpdate() {
@@ -40,6 +40,7 @@ class IdeEditor extends Component {
 
   render() {
     const { language, fontSize } = this.props;
+
     return (
       <div className="IdeEditor IdeComponent">
         <ul className="EditorNav">
@@ -61,7 +62,7 @@ class IdeEditor extends Component {
           showPrintMargin={false}
           showGutter={true}
           focus={true}
-          fontSize={this.props.fontSize}
+          fontSize={fontSize}
           highlightActiveLine={false}
           placeholder={"Write your code Here"}
           width="100%"
