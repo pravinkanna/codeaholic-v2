@@ -1,0 +1,38 @@
+.IdeInput {
+  background: #15314b;
+  height: 100%;
+  width: 100%;
+  border-right: 15px solid #02203c;
+}
+
+.IdeInput p {
+  color: #ffffff;
+  width: min-content;
+  padding: 5px 20px;
+  background-color: #001528;
+  height: 2rem;
+  margin: 0;
+}
+
+.IdeInput textarea {
+  /* Firefox */
+  height: -moz-calc(100% - 2rem);
+  /* WebKit */
+  height: -webkit-calc(100% - 2rem);
+  /* Opera */
+  height: -o-calc(100% - 2rem);
+  /* Standard */
+  height: calc(100% - 2rem);
+  width: 100%;
+  font-family: consolas;
+  padding: 20px 30px;
+  background: #001528;
+  color: #ffffff;
+  border: none;
+  overflow: auto;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  resize: none;
+}
