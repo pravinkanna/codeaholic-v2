@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const PORT = 3001 || process.env.PORT;
+const PORT = 3002 || process.env.PORT;
 
 const { runCode } = require('./server/controllers/runcode')
 
