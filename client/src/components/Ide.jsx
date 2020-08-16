@@ -88,12 +88,12 @@ export class Ide extends Component {
   };
 
   componentDidMount() {
-    window.addEventListener("resize", this.updateWidth);
+    window.addEventListener("resize", this.updateWidth, { passive: false });
     this.updateWidth();
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWidth);
+    window.removeEventListener("resize", this.updateWidth, { passive: false });
   }
 
   render() {

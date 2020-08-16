@@ -1,4 +1,5 @@
 .Ide {
+  touch-action: manipulation;
 }
 /* Resizer Style */
 .Resizer {
