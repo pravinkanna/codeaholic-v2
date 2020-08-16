@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "concurrently \" npm run server \" \" npm run client \" ",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \" npm run server \" \" npm run client \" "
@@ -20,6 +20,7 @@
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "path": "^0.12.7",
     "request": "^2.88.2",
     "request-promise": "^4.2.6"
   }
