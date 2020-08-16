@@ -14,7 +14,7 @@ app.use(express.json());
 // To use Production Build
 app.use(express.static('client/build'));
 
-app.get('/', (req, res) => {
+app.get('/code', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
 
