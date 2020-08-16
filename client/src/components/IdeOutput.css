@@ -34,7 +34,7 @@
   /* Standard */
   height: calc(100% - 2rem);
   width: 100%;
-  font-family: consolas;
+  font-family: consolas !important;
   overflow: hidden;
   padding: 20px 30px;
   background: #001528;

@@ -1,5 +1,6 @@
 .Ide {
   touch-action: manipulation;
+  overflow: hidden;
 }
 /* Resizer Style */
 .Resizer {
@@ -77,6 +78,19 @@
 
 /* Mobile Responsive*/
 @media (max-width: 767px) {
+  .Navbar {
+    padding: 0;
+  }
+  .Navbar .Logo {
+    margin-left: 5px;
+    height: 40px;
+  }
+
+  .Navbar .NavbarBrand {
+    font-size: 25px;
+    font-family: "Permanent Marker";
+  }
+
   .IdeEditor {
     border-left: 15px solid #02203c;
     border-right: 15px solid #02203c;
