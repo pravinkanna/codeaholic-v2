@@ -3,23 +3,14 @@
   height: 100%;
   border-left: 15px solid #02203c;
   border-bottom: 15px solid #02203c !important;
-  overflow: hidden;
 }
 
-.IdeEditor button {
-  padding: 0 20px;
-  width: 80px;
-  height: 100%;
-  outline: none !important;
-  box-shadow: none !important;
+.ace_editor {
+  background: #001528 !important;
+  height: 95% !important;
 }
-
-.ace_editor,
 .ace_gutter {
   background: #001528 !important;
-  /* height: 95% !important; */
-}
-.ace_gutter {
   z-index: 0;
 }
 
@@ -34,7 +25,6 @@
 
 .IdeEditor .EditorNav {
   display: flex;
-  margin-top: 5px !important;
   justify-content: space-between;
   margin: 0;
   text-decoration: none;
@@ -51,10 +41,11 @@
 }
 
 .IdeEditor button {
-  padding: 0 20px;
-  margin: 0 6px;
-  width: 80px;
-  height: 100%;
+  height: 1.65rem;
+  width: 4rem;
+  margin-top: 5px;
+  margin-right: 7px;
   outline: none !important;
   box-shadow: none !important;
+  border-radius: 0;
 }
