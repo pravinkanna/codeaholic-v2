@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-//Staff Schema
-const AdminSchema = new mongoose.Schema({
+//User Schema
+const UserSchema = new mongoose.Schema({
     id: {
         type: String,
         trim: true,
@@ -32,7 +32,4 @@ const AdminSchema = new mongoose.Schema({
     }
 });
 
-
-const Admin = mongoose.model('Admin', AdminSchema);
-
-module.exports = Admin;
+module.exports = mongoose.model('User', UserSchema);;

@@ -5,12 +5,8 @@ node_modules
 client/node_modules/
 
 # misc
-server/config/
+config/
 .DS_Store
 .env
-
 .vscode
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
