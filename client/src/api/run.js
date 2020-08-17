@@ -1,18 +1,14 @@
-export const run = (updateIsLoading, updateOutput, languageId, code, input) => {
-    updateIsLoading(true);
-    fetch("/api/run/",
-        {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({ languageId: languageId, code: code, input: input })
+const axios = require('axios')
+export const run = async (language_id, source_code, stdin) => {
+    try {
+        const result = await axios.post('/api/ide', {
+            language_id: language_id,
+            source_code: source_code,
+            stdin: stdin
         })
-        .then(res => res.json())
-        .then(data => {
-            updateIsLoading(false);
-            updateOutput(data)
-        })
-
+        // if(result.data.status.id )
+        return result;
+    } catch (err) {
+        console.log(err.message);
+    }
 }

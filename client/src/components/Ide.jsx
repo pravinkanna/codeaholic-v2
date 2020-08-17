@@ -17,7 +17,7 @@ export class Ide extends Component {
       code: "",
       input: "",
       output: "",
-      token: "",
+      result: "",
       isLoading: false,
       width: window.width,
     };
@@ -26,6 +26,7 @@ export class Ide extends Component {
     this.updateFontSize = this.updateFontSize.bind(this);
     this.updateCode = this.updateCode.bind(this);
     this.updateInput = this.updateInput.bind(this);
+    this.updateResult = this.updateResult.bind(this);
     this.updateOutput = this.updateOutput.bind(this);
     this.updateIsLoading = this.updateIsLoading.bind(this);
   }
@@ -62,6 +63,13 @@ export class Ide extends Component {
     });
   };
 
+  updateResult = (result) => {
+    this.setState({ result: result }, () => {
+      const output = this.state.result.data["stdout"] || this.state.result.data["stderr"] || this.state.result.data["error"] || this.state.result.data["compile_output"] || "";
+      this.updateOutput(output);
+    });
+  };
+
   updateOutput = (output) => {
     this.setState({
       output: output,
@@ -81,10 +89,14 @@ export class Ide extends Component {
   };
 
   runCode = async () => {
+    this.updateIsLoading(true);
     const languageId = this.languageId[this.state.language];
     const code = this.state.code;
     const input = this.state.input;
-    run(this.updateIsLoading, this.updateOutput, languageId, code, input);
+    const result = await run(languageId, code, input);
+    this.updateResult(result.data);
+    console.log("OnIDE", result.data);
+    this.updateIsLoading(false);
   };
 
   componentDidMount() {
@@ -106,7 +118,7 @@ export class Ide extends Component {
               <IdeEditor language={this.state.language} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
               <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
                 <IdeInput triggerInputUpdate={this.updateInput} />
-                <IdeOutput result={this.state.output} isLoading={this.state.isLoading} />
+                <IdeOutput output={this.state.output} result={this.state.result} isLoading={this.state.isLoading} />
               </SplitPane>
             </SplitPane>
           </SplitPane>
@@ -121,7 +133,7 @@ export class Ide extends Component {
               <IdeEditor language={this.state.language} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
               <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
                 <IdeInput triggerInputUpdate={this.updateInput} />
-                <IdeOutput result={this.state.output} isLoading={this.state.isLoading} />
+                <IdeOutput output={this.state.output} result={this.state.result.data} isLoading={this.state.isLoading} />
               </SplitPane>
             </SplitPane>
           </SplitPane>

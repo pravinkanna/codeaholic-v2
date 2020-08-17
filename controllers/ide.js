@@ -1,62 +1,29 @@
 const axios = require('axios');
-const Share = require('../models/Share');
 
-//@description Create Single Submission
+
+//@description Run Single Submission
 //@route POST /api/ide/
 //@description Public
-exports.createSubmission = async (req, res, next) => {
+exports.runSubmission = async (req, res, next) => {
+    const { language_id, source_code, stdin } = req.body;
     try {
-        const { language_id, source_code, stdin } = req.body;
-        const result = await axios({
-            "method": "POST",
-            "url": "https://codeaholic-api.pravinkanna.me/submissions",
-            "headers": {
-                "content-type": "application/json",
-                "accept": "application/json",
-                "useQueryString": true,
-            }, "data": {
-                "language_id": language_id,
-                "source_code": source_code,
-                "stdin": stdin,
-            }
-        })
+        const token = await createSubmission(language_id, source_code, stdin);
+        const result = await getSubmission(token);
+        //If API Call Limit Exceecd
+        if (result === -1) {
+            return res.status(500).json({
+                success: false,
+                data: "Server Error"
+            });
+        }
 
         return res.status(200).json({
             success: true,
             length: result.length,
-            data: result.data
+            data: result
         });
-    } catch (err) {
-        console.log("Error:", err.message);
-        return res.status(500).json({
-            success: false,
-            data: "Server Error"
-        });
-    }
-}
-
-//@description Get Single Submission
-//@route GET /api/ide/:token
-//@description Public
-exports.getSubmission = async (req, res, next) => {
-    try {
-        const token = req.params.token;
-        const result = await axios({
-            "method": "GET",
-            "url": `https://codeaholic-api.pravinkanna.me/submissions/${token}`,
-            "headers": {
-                "content-type": "application/octet-stream",
-                "useQueryString": true
-            }
-        })
-
-        return res.status(200).json({
-            success: true,
-            length: result.length,
-            data: result.data
-        });
-    } catch (err) {
-        console.log("Error:", err.message);
+    } catch (error) {
+        console.log(error);
         return res.status(500).json({
             success: false,
             data: "Server Error"
@@ -64,7 +31,6 @@ exports.getSubmission = async (req, res, next) => {
     }
 
 }
-
 
 //@description Delete Single Submission
 //@route DELETE /api/ide/:token
@@ -95,102 +61,67 @@ exports.deleteSubmission = async (req, res, next) => {
     }
 }
 
-//@description Share code
-//@route POST /api/ide/share/:id
-//@description Public
-exports.getShare = async (req, res, next) => {
-    try {
-        const id = req.params.id;
-        //If ID lenght is not 24
-        if (id.length !== 24) {
-            return res.status(404).json({
-                success: false,
-                error: "No Shared Code Found"
-            })
-        }
-        const share = await Share.findById(id);
-        //If ID not in DB
-        if (!share) {
-            return res.status(404).json({
-                success: false,
-                error: "No Shared Code Found"
-            })
-        }
-        //Success Response
-        return res.status(200).json({
-            success: true,
-            data: share
-        })
+//Encode BASE64
+const encodeB64 = (plainStr) => {
+    const encodedStr = Buffer.from(plainStr, "utf-8").toString("base64");
+    return encodedStr;
+};
 
+//Decode BASE64
+const decodeB64 = (encodedStr) => {
+    const decodedStr = Buffer.from(encodedStr, "base64").toString("utf-8");
+    return decodedStr;
+};
+
+
+const createSubmission = async (language_id, source_code, stdin) => {
+    try {
+        const result = await axios({
+            "method": "POST",
+            "url": "https://codeaholic-api.pravinkanna.me/submissions?base64_encoded=true",
+            "headers": {
+                "content-type": "application/json",
+                "accept": "application/json",
+                "useQueryString": true,
+            }, "data": {
+                "language_id": language_id,
+                "source_code": encodeB64(source_code),
+                "stdin": encodeB64(stdin),
+            }
+        })
+        return result.data.token;
     } catch (err) {
         console.log("Error:", err.message);
-        return res.status(500).json({
-            success: false,
-            data: "Server Error"
-        });
     }
 }
 
-//@description Share code
-//@route POST /api/ide/share/
-//@description Public
-exports.createShare = async (req, res, next) => {
+const getSubmission = async (token) => {
     try {
-        //Creating entry in DB
-        const share = await Share.create(req.body);
-        return res.status(201).json({
-            success: true,
-            data: share
-        })
-
-    } catch (err) {
-        if (err.name === 'ValidationError') {
-            const messages = Object.values(err.errors).map(val => val.message);
-            return res.status(400).json({
-                success: false,
-                error: messages
+        let statusID = -1, result;
+        //Restricting calling API more than 10 times
+        for (let count = 0; count < 10 && statusID <= 2; count++) {
+            result = await axios({
+                "method": "GET",
+                "url": `https://codeaholic-api.pravinkanna.me/submissions/${token}?base64_encoded=true`,
+                "headers": {
+                    "content-type": "application/octet-stream",
+                    "useQueryString": true
+                }
             })
+            statusID = result.data.status.id;
+        }
+        if (statusID > 2) {
+            result = result.data
+            if (result["stdout"]) result["stdout"] = decodeB64(result["stdout"]);
+            if (result["stderr"]) result["stderr"] = decodeB64(result["stderr"]);
+            if (result["compile_output"]) result["compile_output"] = decodeB64(result["compile_output"]);
+            if (result["message"]) result["message"] = decodeB64(result["message"]);
+            return result;
         } else {
-            console.log("Error:", err.message);
-            return res.status(500).json({
-                success: false,
-                data: "Server Error"
-            });
+            return -1;
         }
-
-    }
-}
-
-//@description Delete Shared code
-//@route DELETE /api/ide/share/
-//@description Public
-exports.deleteShare = async (req, res, next) => {
-    try {
-        const id = req.params.id;
-        //If ID lenght is not 24
-        if (id.length !== 24) {
-            return res.status(404).json({
-                success: false,
-                error: "No Shared Code Found"
-            })
-        }
-        const deleteShare = await Share.findByIdAndDelete(id);
-        if (!deleteShare) {
-            return res.status(404).json({
-                success: false,
-                error: "No Shared Code Found"
-            })
-        }
-        return res.status(200).json({
-            success: true,
-            data: "Delete success"
-        })
-
     } catch (err) {
-        console.log("Error:", err);
-        return res.status(500).json({
-            success: false,
-            data: "Server Error"
-        });
+        console.log("Error:", err.message);
     }
+
 }
