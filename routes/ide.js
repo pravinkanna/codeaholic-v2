@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createSubmission, getSubmission, deleteSubmission, createShare } = require('../controllers/ide')
+const { createSubmission, getSubmission, deleteSubmission, createShare, getShare, deleteShare } = require('../controllers/ide')
 
 
 router.route('/')
@@ -8,6 +8,10 @@ router.route('/')
 
 router.route('/share')
     .post(createShare)
+
+router.route('/share/:id')
+    .get(getShare)
+    .delete(deleteShare)
 
 router.route('/:token')
     .get(getSubmission)

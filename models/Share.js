@@ -17,7 +17,7 @@ const ShareSchema = new mongoose.Schema({
     },
     stdin: {
         type: String,
-        required: false
+        required: [true, "Please give a valid input"]
     },
     created: {
         type: Date,
