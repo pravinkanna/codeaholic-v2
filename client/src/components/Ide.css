@@ -49,7 +49,6 @@
 .ace_scrollbar-v {
   top: 5px;
   right: 5px;
-  bottom: 5px;
 }
 
 .ace_scrollbar-h {
@@ -71,7 +70,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #bbccdd;
+  background: #626ee3;
 }
 
 /* ##Scrollbar style## */
@@ -81,6 +80,7 @@
   .Navbar {
     padding: 0;
   }
+
   .Navbar .Logo {
     margin-left: 5px;
     height: 40px;
@@ -89,6 +89,15 @@
   .Navbar .NavbarBrand {
     font-size: 25px;
     font-family: "Permanent Marker";
+  }
+
+  .ace_scrollbar-v {
+    right: 0;
+    bottom: 20px !important;
+  }
+
+  .ace_scrollbar-h {
+    bottom: 20px !important;
   }
 
   .IdeEditor {
