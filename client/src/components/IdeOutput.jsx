@@ -12,22 +12,6 @@ export class IdeOutput extends Component {
     };
   }
 
-  componentDidUpdate() {
-    // let result = "";
-    // let output = "";
-    // let statusId = "";
-    // if (this.props.result) {
-    //   result = this.props.result;
-    //   output = result["stdout"] || result["stderr"] || result["error"] || result["compile_output"] || "";
-    //   statusId = result.status["id"];
-    //   this.setState({
-    //     output: output,
-    //     statusId: statusId,
-    //   });
-    // }
-    if (this.props.result) console.log(this.props.result.status.id);
-  }
-
   render() {
     let output,
       statusId,
