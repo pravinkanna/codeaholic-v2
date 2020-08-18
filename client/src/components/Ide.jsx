@@ -18,6 +18,7 @@ export class Ide extends Component {
       input: "",
       output: "",
       result: "",
+      isError: false,
       isLoading: false,
       width: window.width,
     };
@@ -27,6 +28,8 @@ export class Ide extends Component {
     this.updateCode = this.updateCode.bind(this);
     this.updateInput = this.updateInput.bind(this);
     this.updateResult = this.updateResult.bind(this);
+    this.updateOutput = this.updateOutput.bind(this);
+    this.updateIsError = this.updateIsError.bind(this);
     this.updateIsLoading = this.updateIsLoading.bind(this);
   }
 
@@ -68,6 +71,18 @@ export class Ide extends Component {
     });
   };
 
+  updateOutput = (output) => {
+    this.setState({
+      output: output,
+    });
+  };
+
+  updateIsError = (isError) => {
+    this.setState({
+      isError: isError,
+    });
+  };
+
   updateWidth = () => {
     this.setState({
       width: window.innerWidth,
@@ -81,13 +96,30 @@ export class Ide extends Component {
   };
 
   runCode = async () => {
-    this.updateIsLoading(true);
-    const languageId = this.languageId[this.state.language];
-    const code = this.state.code;
-    const input = this.state.input;
-    const result = await run(languageId, code, input);
-    this.updateResult(result.data.data);
-    this.updateIsLoading(false);
+    try {
+      //Starting Spinner
+      this.updateIsLoading(true);
+
+      //Getting values from state store
+      const languageId = this.languageId[this.state.language];
+      const code = this.state.code;
+      const input = this.state.input;
+
+      //Passing valuest to run function
+      const result = await run(languageId, code, input);
+
+      //Setting Output in State
+      const output = result.data.data.stdout || result.data.data.stderr || result.data.data.error || result.data.data.compile_output || "";
+      this.updateOutput(output);
+
+      //Setting Status ID in Stateas
+      result.data.data.status.id === 3 ? this.updateIsError(false) : this.updateIsError(true);
+
+      //Stopping Spinner
+      this.updateIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   componentDidMount() {
@@ -109,7 +141,7 @@ export class Ide extends Component {
               <IdeEditor language={this.state.language} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
               <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
                 <IdeInput triggerInputUpdate={this.updateInput} />
-                <IdeOutput result={this.state.result} isLoading={this.state.isLoading} />
+                <IdeOutput output={this.state.output} isError={this.state.isError} isLoading={this.state.isLoading} />
               </SplitPane>
             </SplitPane>
           </SplitPane>
@@ -124,7 +156,7 @@ export class Ide extends Component {
               <IdeEditor language={this.state.language} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
               <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
                 <IdeInput triggerInputUpdate={this.updateInput} />
-                <IdeOutput result={this.state.result} isLoading={this.state.isLoading} />
+                <IdeOutput output={this.state.output} isError={this.state.isError} isLoading={this.state.isLoading} />
               </SplitPane>
             </SplitPane>
           </SplitPane>

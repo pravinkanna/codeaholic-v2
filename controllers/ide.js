@@ -6,31 +6,25 @@ const axios = require('axios');
 //@description Public
 exports.runSubmission = async (req, res, next) => {
     const { language_id, source_code, stdin } = req.body;
-    console.log("2. Got API request ide.js controller", language_id, source_code, stdin);
     try {
-        console.log("3. Creating submission:");
         const token = await createSubmission(language_id, source_code, stdin);
-        console.log("4. Created submission token:", token);
-        console.log("5. Getting submission:");
         const result = await getSubmission(token);
-        console.log("6. Got submission result:", result);
         //If API Call Limit Exceecd
         if (result === -1) {
-            console.log("7.1. Unable to fetch from Codeaholic API", result);
             return res.status(500).json({
                 success: false,
-                data: "Server Error"
+                data: {
+                    data: "Server Error"
+                }
             });
         }
-        console.log("7.2.Fetch from Codeaholic API success", result);
         return res.status(200).json({
             success: true,
             length: result.length,
             data: result
         });
     } catch (error) {
-        console.log("0. Error in runSubmission", error);
-        // console.log(error);
+        console.log(error);
         return res.status(500).json({
             success: false,
             data: "Server Error"
@@ -104,10 +98,9 @@ const createSubmission = async (language_id, source_code, stdin) => {
 
 const getSubmission = async (token) => {
     try {
-        console.log("5.1 In Get submission with token: ", token);
         let statusID = -1, result;
         //Restricting calling API more than 10 times
-        for (let count = 0; count < 10 && statusID <= 2; count++) {
+        for (let count = 0; count < 20 && statusID <= 2; count++) {
             await sleep(500);
             result = await axios({
                 "method": "GET",
@@ -117,11 +110,9 @@ const getSubmission = async (token) => {
                     "useQueryString": true
                 }
             })
-            console.log("5.2 Result fetched from API  count:", count);
             statusID = result.data.status.id;
         }
         if (statusID > 2) {
-            console.log("5.3 Result fetched is Valid status ID ", statusID);
             result = result.data
             if (result["stdout"]) result["stdout"] = decodeB64(result["stdout"]);
             if (result["stderr"]) result["stderr"] = decodeB64(result["stderr"]);
@@ -129,7 +120,6 @@ const getSubmission = async (token) => {
             if (result["message"]) result["message"] = decodeB64(result["message"]);
             return result;
         } else {
-            console.log("5.3 Result fetched is NOOT Valid status ID ", statusID);
             return -1;
         }
     } catch (err) {
