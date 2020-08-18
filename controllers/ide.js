@@ -6,6 +6,7 @@ const axios = require('axios');
 //@description Public
 exports.runSubmission = async (req, res, next) => {
     const { language_id, source_code, stdin } = req.body;
+    console.log("2. Got API request ide.js controller", language_id, source_code, stdin);
     try {
         const token = await createSubmission(language_id, source_code, stdin);
         const result = await getSubmission(token);
@@ -16,7 +17,7 @@ exports.runSubmission = async (req, res, next) => {
                 data: "Server Error"
             });
         }
-
+        console.log("3. Returnin APi Response", result);
         return res.status(200).json({
             success: true,
             length: result.length,
