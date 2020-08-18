@@ -34,7 +34,7 @@
   /* Standard */
   height: calc(100% - 2rem);
   width: 100%;
-  font-family: consolas !important;
+  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif !important;
   overflow: hidden;
   padding: 20px 30px;
   background: #001528;
