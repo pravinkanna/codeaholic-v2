@@ -104,6 +104,7 @@ const createSubmission = async (language_id, source_code, stdin) => {
 
 const getSubmission = async (token) => {
     try {
+        console.log("5.1 In Get submission with token: ", token);
         let statusID = -1, result;
         //Restricting calling API more than 10 times
         for (let count = 0; count < 10 && statusID <= 2; count++) {
@@ -115,9 +116,11 @@ const getSubmission = async (token) => {
                     "useQueryString": true
                 }
             })
+            console.log("5.2 Result fetched from API result:", result, 'count:', count);
             statusID = result.data.status.id;
         }
         if (statusID > 2) {
+            console.log("5.3 Result fetched is Valid status ID ", statusID);
             result = result.data
             if (result["stdout"]) result["stdout"] = decodeB64(result["stdout"]);
             if (result["stderr"]) result["stderr"] = decodeB64(result["stderr"]);
@@ -125,6 +128,7 @@ const getSubmission = async (token) => {
             if (result["message"]) result["message"] = decodeB64(result["message"]);
             return result;
         } else {
+            console.log("5.3 Result fetched is NOOT Valid status ID ", statusID);
             return -1;
         }
     } catch (err) {
