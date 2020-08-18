@@ -8,23 +8,29 @@ exports.runSubmission = async (req, res, next) => {
     const { language_id, source_code, stdin } = req.body;
     console.log("2. Got API request ide.js controller", language_id, source_code, stdin);
     try {
+        console.log("3. Creating submission:");
         const token = await createSubmission(language_id, source_code, stdin);
+        console.log("4. Created submission token:", token);
+        console.log("5. Getting submission:");
         const result = await getSubmission(token);
+        console.log("6. Got submission result:", result);
         //If API Call Limit Exceecd
         if (result === -1) {
+            console.log("7.1. Unable to fetch from Codeaholic API", result);
             return res.status(500).json({
                 success: false,
                 data: "Server Error"
             });
         }
-        console.log("3. Returnin APi Response", result);
+        console.log("7.2.Fetch from Codeaholic API success", result);
         return res.status(200).json({
             success: true,
             length: result.length,
             data: result
         });
     } catch (error) {
-        console.log(error);
+        console.log("0. Error in runSubmission", error);
+        // console.log(error);
         return res.status(500).json({
             success: false,
             data: "Server Error"
