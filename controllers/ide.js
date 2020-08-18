@@ -108,6 +108,7 @@ const getSubmission = async (token) => {
         let statusID = -1, result;
         //Restricting calling API more than 10 times
         for (let count = 0; count < 10 && statusID <= 2; count++) {
+            await sleep(500);
             result = await axios({
                 "method": "GET",
                 "url": `https://codeaholic-api.pravinkanna.me/submissions/${token}?base64_encoded=true`,
@@ -136,3 +137,5 @@ const getSubmission = async (token) => {
     }
 
 }
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
