@@ -117,7 +117,7 @@ const getSubmission = async (token) => {
                     "useQueryString": true
                 }
             })
-            console.log("5.2 Result fetched from API result:", result, 'count:', count);
+            console.log("5.2 Result fetched from API  count:", count);
             statusID = result.data.status.id;
         }
         if (statusID > 2) {
