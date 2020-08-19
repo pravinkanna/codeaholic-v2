@@ -11,7 +11,7 @@ export class IdeModal extends Component {
   };
 
   copyTextToClipboard = () => {
-    const link = `${window.location.origin}${process.env.PUBLIC_URL}?shareId=/${this.props.shareId}`;
+    const link = `${window.location.origin}${process.env.PUBLIC_URL}?shareId=${this.props.shareId}`;
     var textField = document.createElement("textarea");
     textField.innerHTML = link;
     document.body.appendChild(textField);
@@ -22,7 +22,7 @@ export class IdeModal extends Component {
   };
 
   render() {
-    const link = `${window.location.origin}${process.env.PUBLIC_URL}?shareId=/${this.props.shareId}`;
+    const link = `${window.location.origin}${process.env.PUBLIC_URL}?shareId=${this.props.shareId}`;
     return (
       <div className="IdeModal">
         <Modal show={this.props.modalShow} onClick={this.hideModal} className="modal">
