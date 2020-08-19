@@ -1,4 +1,3 @@
-const axios = require('axios');
 const Share = require('../models/Share');
 
 
@@ -42,9 +41,13 @@ exports.getShare = async (req, res, next) => {
 //@route POST /api/ide/share/
 //@description Public
 exports.createShare = async (req, res, next) => {
+    console.log("B1 Enterd into createshare funtion");
+
     try {
         //Creating entry in DB
+        console.log("B2 Creating database entry data", req.body);
         const share = await Share.create(req.body);
+        console.log("B3 Got Result from DB", share);
         return res.status(201).json({
             success: true,
             data: share
@@ -52,12 +55,14 @@ exports.createShare = async (req, res, next) => {
 
     } catch (err) {
         if (err.name === 'ValidationError') {
+            console.log("B4.1 Validation Error");
             const messages = Object.values(err.errors).map(val => val.message);
             return res.status(400).json({
                 success: false,
                 error: messages
             })
         } else {
+            console.log("B4.2 Error", err.message);
             console.log("Error:", err.message);
             return res.status(500).json({
                 success: false,
