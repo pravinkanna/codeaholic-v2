@@ -19,10 +19,10 @@ class IdeEditor extends Component {
   }
 
   modes = {
-    c: "c_cpp",
-    cpp: "c_cpp",
-    java: "java",
-    python: "python",
+    50: "c_cpp",
+    54: "c_cpp",
+    62: "java",
+    71: "python",
   };
 
   handleChange = () => {
@@ -39,7 +39,7 @@ class IdeEditor extends Component {
   }
 
   render() {
-    const { language, fontSize } = this.props;
+    const { languageId, fontSize } = this.props;
 
     return (
       <div className="IdeEditor IdeComponent">
@@ -57,7 +57,7 @@ class IdeEditor extends Component {
         <AceEditor
           ref={this.aceEditor}
           onChange={this.handleChange}
-          mode={this.modes[language]}
+          mode={this.modes[languageId]}
           theme="monokai"
           showPrintMargin={false}
           showGutter={true}
@@ -67,6 +67,7 @@ class IdeEditor extends Component {
           placeholder={"Write your code Here"}
           width="100%"
           height="100%"
+          value={this.props.code}
           setOptions={{
             tabSize: 4,
           }}

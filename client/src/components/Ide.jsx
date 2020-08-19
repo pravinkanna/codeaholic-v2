@@ -4,45 +4,63 @@ import IdeNavbar from "./IdeNavbar";
 import IdeEditor from "./IdeEditor";
 import IdeInput from "./IdeInput";
 import IdeOutput from "./IdeOutput";
+import IdeModal from "./IdeModal";
 import "./Ide.css";
 
 import { run } from "../api/run";
+import { share, getShare } from "../api/share";
 
 export class Ide extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language: "c",
+      languageId: "50",
       fontSize: 16,
       code: "",
       input: "",
       output: "",
       result: "",
+      shareId: "",
       isError: false,
       isLoading: false,
+      modalShow: false,
       width: window.width,
     };
 
-    this.updateLanguage = this.updateLanguage.bind(this);
-    this.updateFontSize = this.updateFontSize.bind(this);
-    this.updateCode = this.updateCode.bind(this);
-    this.updateInput = this.updateInput.bind(this);
-    this.updateResult = this.updateResult.bind(this);
-    this.updateOutput = this.updateOutput.bind(this);
-    this.updateIsError = this.updateIsError.bind(this);
-    this.updateIsLoading = this.updateIsLoading.bind(this);
+    // this.updateLanguage = this.updateLanguage.bind(this);
+    // this.updateFontSize = this.updateFontSize.bind(this);
+    // this.updateCode = this.updateCode.bind(this);
+    // this.updateInput = this.updateInput.bind(this);
+    // this.updateOutput = this.updateOutput.bind(this);
+    // this.updateResult = this.updateResult.bind(this);
+    // this.updateShareId = this.updateShareId.bind(this);
+    // this.updateIsError = this.updateIsError.bind(this);
+    // this.updateIsLoading = this.updateIsLoading.bind(this);
+    // this.updateModalShow = this.updateModalShow.bind(this);
+    // this.updateWidth = this.updateWidth.bind(this);
   }
 
-  languageId = {
-    c: "50",
-    cpp: "54",
-    java: "62",
-    python: "71",
-  };
+  componentDidMount() {
+    //Resizing Editor while resizing screen
+    window.addEventListener("resize", this.updateWidth, { passive: false });
+    this.updateWidth();
 
-  updateLanguage = (language) => {
+    //Extracting shareID from URL
+    let search = window.location.search;
+    let params = new URLSearchParams(search);
+    let shareId = params.get("shareId");
+    if (shareId) console.log(this.getSharedCode(shareId));
+  }
+
+  componentWillUnmount() {
+    //Resizing Editor while resizing screen
+    window.removeEventListener("resize", this.updateWidth, { passive: false });
+    this.updateWidth();
+  }
+
+  updateLanguage = (languageId) => {
     this.setState({
-      language: language,
+      languageId: languageId,
     });
   };
 
@@ -77,6 +95,12 @@ export class Ide extends Component {
     });
   };
 
+  updateShareId = (shareId) => {
+    this.setState({
+      shareId: shareId,
+    });
+  };
+
   updateIsError = (isError) => {
     this.setState({
       isError: isError,
@@ -95,17 +119,23 @@ export class Ide extends Component {
     });
   };
 
+  updateModalShow = (bool) => {
+    this.setState({
+      modalShow: bool,
+    });
+  };
+
   runCode = async () => {
     try {
       //Starting Spinner
       this.updateIsLoading(true);
 
-      //Getting values from state store
-      const languageId = this.languageId[this.state.language];
+      //Getting values from state
+      const languageId = this.state.languageId;
       const code = this.state.code;
       const input = this.state.input;
 
-      //Passing valuest to run function
+      //Passing to run function
       const result = await run(languageId, code, input);
 
       //Setting Output in State
@@ -122,44 +152,54 @@ export class Ide extends Component {
     }
   };
 
-  componentDidMount() {
-    window.addEventListener("resize", this.updateWidth, { passive: false });
-    this.updateWidth();
-  }
+  shareCode = async () => {
+    //Getting values from state
+    const languageId = this.state.languageId;
+    const code = this.state.code;
+    //Passing to share function
+    const shareId = await share(languageId, code);
+    this.updateShareId(shareId.data.data._id);
+    this.updateModalShow(true);
+  };
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWidth, { passive: false });
-  }
+  getSharedCode = async (shareId) => {
+    const result = await getShare(shareId);
+    console.log(result);
+    this.updateCode(result.data.data.source_code);
+    this.updateLanguage(result.data.data.language_id);
+  };
 
   render() {
     if (this.state.width > 767) {
       return (
         <div className="Ide">
           <SplitPane split="horizontal" allowResize={false}>
-            <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} code={this.state.code} />
+            <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} languageId={this.state.languageId} fontSize={this.state.fontSize} code={this.state.code} />
             <SplitPane split="vertical" minSize={0} maxSize={-1} defaultSize="60%">
-              <IdeEditor language={this.state.language} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
+              <IdeEditor languageId={this.state.languageId} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
               <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
                 <IdeInput triggerInputUpdate={this.updateInput} />
                 <IdeOutput output={this.state.output} isError={this.state.isError} isLoading={this.state.isLoading} />
               </SplitPane>
             </SplitPane>
           </SplitPane>
+          <IdeModal triggerModalShowUpdate={this.updateModalShow} modalShow={this.state.modalShow} shareId={this.state.shareId} />
         </div>
       );
     } else {
       return (
         <div className="Ide">
           <SplitPane split="horizontal" allowResize={false}>
-            <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} code={this.state.code} />
+            <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} languageId={this.state.languageId} fontSize={this.state.fontSize} code={this.state.code} />
             <SplitPane split="horizontal" minSize={0} maxSize={-5} defaultSize="50%">
-              <IdeEditor language={this.state.language} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
+              <IdeEditor languageId={this.state.languageId} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
               <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
                 <IdeInput triggerInputUpdate={this.updateInput} />
                 <IdeOutput output={this.state.output} isError={this.state.isError} isLoading={this.state.isLoading} />
               </SplitPane>
             </SplitPane>
           </SplitPane>
+          <IdeModal triggerModalShowUpdate={this.updateModalShow} modalShow={this.state.modalShow} shareId={this.state.shareId} />
         </div>
       );
     }

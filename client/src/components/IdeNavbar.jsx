@@ -4,22 +4,18 @@ import "./IdeNavbar.css";
 import logo from "./pkLogo.svg";
 
 class IdeNavbar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      language: "c",
-      fontSize: "16",
-    };
-    // this.props.triggerLanguageUpdate(this.state.language);
-    // this.props.triggerFontSizeUpdate(this.state.fontSize);
-  }
+  // languageId
+  // c: "50"
+  // cpp: "54"
+  // python: "71"
+  // java: "62"
+  //
 
   languageName = {
-    c: "C (GCC 9.2.0)",
-    cpp: "C++ (GCC 9.2.0)",
-    java: "Java (OpenJDK 13.0.1)",
-    python: "Python (3.8.1)",
+    50: "C (GCC 9.2.0)",
+    54: "C++ (GCC 9.2.0)",
+    71: "Python (3.8.1)",
+    62: "Java (OpenJDK 13.0.1)",
   };
 
   sizeName = {
@@ -29,17 +25,11 @@ class IdeNavbar extends Component {
     20: "20px",
   };
 
-  handleLanguage = (language) => {
-    this.setState({
-      language: language,
-    });
-    this.props.triggerLanguageUpdate(language);
+  handleLanguage = (languageId) => {
+    this.props.triggerLanguageUpdate(languageId);
   };
 
   handleFontSize = (fontSize) => {
-    this.setState({
-      fontSize: fontSize,
-    });
     this.props.triggerFontSizeUpdate(fontSize);
   };
 
@@ -52,7 +42,7 @@ class IdeNavbar extends Component {
   };
 
   render() {
-    const { language, fontSize } = this.state;
+    const { languageId, fontSize } = this.props;
     return (
       <Navbar variant="dark" expand="lg" className="Navbar">
         <Navbar.Brand href="#home" className="NavbarBrand">
@@ -62,17 +52,17 @@ class IdeNavbar extends Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <DropdownButton className="languageBtn" title={this.languageName[language]} onSelect={this.handleLanguage}>
-              <Dropdown.Item className={language === "c" ? "selected" : ""} eventKey="c">
+            <DropdownButton className="languageBtn" title={this.languageName[languageId]} onSelect={this.handleLanguage}>
+              <Dropdown.Item className={languageId === "50" ? "selected" : ""} eventKey="50">
                 C (GCC 9.2.0)
               </Dropdown.Item>
-              <Dropdown.Item className={language === "cpp" ? "selected" : ""} eventKey="cpp">
+              <Dropdown.Item className={languageId === "54" ? "selected" : ""} eventKey="54">
                 C++ (GCC 9.2.0)
               </Dropdown.Item>
-              <Dropdown.Item className={language === "python" ? "selected" : ""} eventKey="python">
+              <Dropdown.Item className={languageId === "71" ? "selected" : ""} eventKey="71">
                 Python (3.8.1)
               </Dropdown.Item>
-              <Dropdown.Item className={language === "java" ? "selected" : ""} eventKey="java">
+              <Dropdown.Item className={languageId === "62" ? "selected" : ""} eventKey="62">
                 Java (OpenJDK 13.0.1)
               </Dropdown.Item>
             </DropdownButton>
