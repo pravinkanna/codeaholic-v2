@@ -153,13 +153,17 @@ export class Ide extends Component {
   };
 
   shareCode = async () => {
+    console.log("1. Entered shareCode funtion");
     //Getting values from state
     const languageId = this.state.languageId;
     const code = this.state.code;
+    console.log("2. languageId", languageId, "code", code);
     //Passing to share function
     const shareId = await share(languageId, code);
+    console.log("3. ShareId", shareId);
     this.updateShareId(shareId.data.data._id);
     this.updateModalShow(true);
+    console.log("4. Finished");
   };
 
   getSharedCode = async (shareId) => {
