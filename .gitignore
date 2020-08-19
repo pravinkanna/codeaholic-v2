@@ -4,9 +4,8 @@
 node_modules
 client/node_modules/
 
-# misc
+# config files
 config/
-.DS_Store
 .env
 .vscode
 
