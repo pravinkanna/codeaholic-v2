@@ -6,6 +6,7 @@ import "./IdeEditor.css";
 import "ace-builds/src-min-noconflict/mode-c_cpp";
 import "ace-builds/src-min-noconflict/mode-python";
 import "ace-builds/src-min-noconflict/mode-java";
+import "ace-builds/src-noconflict/ext-language_tools";
 
 import "ace-builds/webpack-resolver";
 
@@ -23,6 +24,8 @@ class IdeEditor extends Component {
     54: "c_cpp",
     62: "java",
     71: "python",
+    68: "php",
+    82: "mysql",
   };
 
   handleChange = () => {

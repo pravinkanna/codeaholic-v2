@@ -4,18 +4,14 @@ import "./IdeNavbar.css";
 import logo from "./pkLogo.svg";
 
 class IdeNavbar extends Component {
-  // languageId
-  // c: "50"
-  // cpp: "54"
-  // python: "71"
-  // java: "62"
-  //
-
   languageName = {
     50: "C (GCC 9.2.0)",
     54: "C++ (GCC 9.2.0)",
     71: "Python (3.8.1)",
     62: "Java (OpenJDK 13.0.1)",
+    63: "JavaScript (Node.js 12.14.0)",
+    68: "PHP (7.4.1)",
+    82: "SQL (SQLite 3.27.2)",
   };
 
   sizeName = {
@@ -64,6 +60,15 @@ class IdeNavbar extends Component {
               </Dropdown.Item>
               <Dropdown.Item className={languageId === "62" ? "selected" : ""} eventKey="62">
                 Java (OpenJDK 13.0.1)
+              </Dropdown.Item>
+              <Dropdown.Item className={languageId === "63" ? "selected" : ""} eventKey="63">
+                JavaScript (Node.js 12.14.0)
+              </Dropdown.Item>
+              <Dropdown.Item className={languageId === "68" ? "selected" : ""} eventKey="68">
+                PHP (7.4.1)
+              </Dropdown.Item>
+              <Dropdown.Item className={languageId === "82" ? "selected" : ""} eventKey="82">
+                SQL (SQLite 3.27.2)
               </Dropdown.Item>
             </DropdownButton>
 
