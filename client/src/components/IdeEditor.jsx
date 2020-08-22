@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Event } from "./tracking";
 import AceEditor from "react-ace";
 import { Button, Spinner } from "react-bootstrap";
 import "./IdeEditor.css";
@@ -35,6 +36,7 @@ class IdeEditor extends Component {
 
   handleClick = () => {
     this.props.run();
+    Event("Run", "Code Run Button", "IDE_PAGE");
   };
 
   componentDidUpdate() {

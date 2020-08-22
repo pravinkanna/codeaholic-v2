@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Event } from "./tracking";
 import { Button, Navbar, Nav, DropdownButton, Dropdown } from "react-bootstrap";
 import "./IdeNavbar.css";
 import logo from "./pkLogo.svg";
@@ -32,6 +33,7 @@ class IdeNavbar extends Component {
   handleShareCode = () => {
     if (this.props.code) {
       this.props.shareCode();
+      Event("Share", "Code Shared Button", "IDE_PAGE");
     } else {
       alert("Editor is empty!");
     }
