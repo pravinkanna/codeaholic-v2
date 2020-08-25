@@ -22,7 +22,7 @@ export class IdeModal extends Component {
   };
 
   render() {
-    const link = `${window.location.origin}${process.env.PUBLIC_URL}?shareId=${this.props.shareId}`;
+    const link = `${window.location.protocol}//${window.location.host}?shareId=${this.props.shareId}`;
     return (
       <div className="IdeModal">
         <Modal show={this.props.modalShow} onClick={this.hideModal} className="modal">
