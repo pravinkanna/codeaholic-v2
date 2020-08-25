@@ -8,12 +8,18 @@
   border-left: 15px solid #02203c;
 }
 
+.Navbar .BrandName {
+  vertical-align: middle;
+}
+
 .Navbar .Logo {
   height: 40px;
 }
 
-.Navbar .NavbarBrand {
+.Navbar .BrandName {
   font-size: 30px;
+  margin-top: 10px;
+  display: inline-block;
   font-family: "Permanent Marker";
 }
 

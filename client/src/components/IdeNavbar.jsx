@@ -45,7 +45,7 @@ class IdeNavbar extends Component {
       <Navbar variant="dark" expand="lg" className="Navbar">
         <Navbar.Brand href="#home" className="NavbarBrand">
           <img src={logo} alt="logo" className="Logo" />
-          <span className="BrandName">&nbsp;Pravin IDE</span>
+          &nbsp; <h1 className="BrandName">Pravin IDE</h1>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

@@ -86,9 +86,9 @@
     height: 40px;
   }
 
-  .Navbar .NavbarBrand {
+  .Navbar .BrandName {
     font-size: 25px;
-    font-family: "Permanent Marker";
+    margin-top: 5px;
   }
 
   .ace_scrollbar-v {
