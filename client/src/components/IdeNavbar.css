@@ -14,6 +14,8 @@
 
 .Navbar .Logo {
   height: 40px;
+  color: green !important;
+  fill: green !important;
 }
 
 .Navbar .BrandName {
