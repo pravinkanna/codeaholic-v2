@@ -74,9 +74,11 @@ const decodeB64 = (encodedStr) => {
     return decodedStr;
 };
 
-
 const createSubmission = async (language_id, source_code, stdin) => {
     try {
+        const phpReadlineCode = "\n<?php\n function readline($prompt=null){if($prompt){echo $prompt;}$fp=fopen(\"php://stdin\",\"r\");$line=rtrim(fgets($fp,1024));return $line;}\n?>"
+        if (language_id === "68")
+            source_code = source_code + phpReadlineCode;
         const result = await axios({
             "method": "POST",
             "url": "https://codeaholic-api.pravinkanna.me/submissions?base64_encoded=true",
