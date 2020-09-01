@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
-import "./IdeModal.css";
+import "./IdeShareModal.css";
 
 export class IdeModal extends Component {
   showModal = () => {
-    this.props.triggerModalShowUpdate(true);
+    this.props.triggerShareModalShowUpdate(true);
   };
   hideModal = () => {
-    this.props.triggerModalShowUpdate(false);
+    this.props.triggerShareModalShowUpdate(false);
   };
 
   copyTextToClipboard = () => {
@@ -25,7 +25,7 @@ export class IdeModal extends Component {
     const link = `${window.location.protocol}//${window.location.host}?shareId=${this.props.shareId}`;
     return (
       <div className="IdeModal">
-        <Modal show={this.props.modalShow} onClick={this.hideModal} className="modal">
+        <Modal show={this.props.shareModalShow} animation={true} className="modal" onHide={this.hideModal}>
           <Modal.Header closeButton className="modal-header">
             <Modal.Title>Code Shared</Modal.Title>
           </Modal.Header>

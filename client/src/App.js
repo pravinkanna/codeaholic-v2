@@ -7,7 +7,6 @@ import "./App.css";
 
 
 class App extends Component {
-
   componentDidMount() {
     initGA('UA-175900721-1');
     PageView();

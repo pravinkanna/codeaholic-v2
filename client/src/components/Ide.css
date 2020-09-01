@@ -76,6 +76,15 @@
 /* ##Scrollbar style## */
 
 /* Mobile Responsive*/
+@media (max-width: 992px) {
+  .Navbar {
+    /* padding-bottom: 10px; */
+    /* align-content: center; */
+    /* align-items: center;
+    vertical-align: middle; */
+  }
+}
+
 @media (max-width: 767px) {
   .Navbar {
     padding: 0;

@@ -54,7 +54,13 @@ class IdeEditor extends Component {
           </li>
           <li>
             <Button variant="primary" size="sm" onClick={this.handleClick} disabled={isEmpty(this.props.code) || this.props.isLoading}>
-              {this.props.isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Run"}
+              {this.props.isLoading ? (
+                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+              ) : (
+                <>
+                  <i className="fas fa-play"></i>&nbsp;&nbsp;Run
+                </>
+              )}
             </Button>
           </li>
         </ul>

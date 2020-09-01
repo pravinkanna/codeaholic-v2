@@ -1,12 +1,17 @@
 const express = require('express');
-const app = express();
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const morgan = require('morgan');
-const connectDB = require('./config/db')
+const chalk = require('chalk');
 
-//Routes path config
+const app = express();
+const connectDB = require('./config/db');
+const PORT = process.env.PORT || 3002;
+
 const ide = require('./routes/ide');
+const auth = require('./routes/auth');
+
 
 //Load configs
 dotenv.config({ path: './config/config.env' })
@@ -14,14 +19,17 @@ dotenv.config({ path: './config/config.env' })
 //Connect to Database
 connectDB();
 
+//Express body parser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//Cookie parser middleware 
+app.use(cookieParser());
+
 //Morgan middleware
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
-
-//Express bodyparser middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 
 //Routes
@@ -37,5 +45,5 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Server
-const PORT = process.env.PORT || 3002;
-app.listen(PORT, console.log(`Server started \t Mode: ${process.env.NODE_ENV} PORT: ${PORT}`))
+
+app.listen(PORT, console.log(chalk.green(`Server running in ${chalk.blue(process.env.NODE_ENV)} mode on port ${chalk.blue(PORT)}`)))

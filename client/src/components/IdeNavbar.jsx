@@ -39,6 +39,11 @@ class IdeNavbar extends Component {
     }
   };
 
+  handleLogin = () => {
+    this.props.login();
+    Event("Login", "Login Button", "IDE_PAGE");
+  };
+
   render() {
     const { languageId, fontSize } = this.props;
     return (
@@ -90,11 +95,12 @@ class IdeNavbar extends Component {
             </DropdownButton>
 
             <Button className="share" onClick={this.handleShareCode}>
-              <i className="fas fa-share-alt"></i>
+              <i className="fas fa-share-alt"></i>&nbsp;Share
             </Button>
 
-            <Button className="login" onClick={this.handleShareCode}>
-              Login
+            <Button className="login" onClick={this.handleLogin}>
+              <i className="fas fa-sign-in-alt"></i>
+              &nbsp;Login
             </Button>
           </Nav>
         </Navbar.Collapse>

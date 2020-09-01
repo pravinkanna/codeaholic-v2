@@ -4,7 +4,8 @@ import IdeNavbar from "./IdeNavbar";
 import IdeEditor from "./IdeEditor";
 import IdeInput from "./IdeInput";
 import IdeOutput from "./IdeOutput";
-import IdeModal from "./IdeModal";
+import IdeShareModal from "./IdeShareModal";
+import IdeLoginModal from "./IdeLoginModal";
 import "./Ide.css";
 
 import { run } from "../api/run";
@@ -23,21 +24,10 @@ export class Ide extends Component {
       shareId: "",
       isError: false,
       isLoading: false,
-      modalShow: false,
+      shareModalShow: false,
+      loginModalShow: false,
       width: window.width,
     };
-
-    // this.updateLanguage = this.updateLanguage.bind(this);
-    // this.updateFontSize = this.updateFontSize.bind(this);
-    // this.updateCode = this.updateCode.bind(this);
-    // this.updateInput = this.updateInput.bind(this);
-    // this.updateOutput = this.updateOutput.bind(this);
-    // this.updateResult = this.updateResult.bind(this);
-    // this.updateShareId = this.updateShareId.bind(this);
-    // this.updateIsError = this.updateIsError.bind(this);
-    // this.updateIsLoading = this.updateIsLoading.bind(this);
-    // this.updateModalShow = this.updateModalShow.bind(this);
-    // this.updateWidth = this.updateWidth.bind(this);
   }
 
   componentDidMount() {
@@ -119,12 +109,17 @@ export class Ide extends Component {
     });
   };
 
-  updateModalShow = (bool) => {
+  updateShareModalShow = (bool) => {
     this.setState({
-      modalShow: bool,
+      shareModalShow: bool,
     });
   };
 
+  updateLoginModalShow = (bool) => {
+    this.setState({
+      loginModalShow: bool,
+    });
+  };
   runCode = async () => {
     try {
       //Starting Spinner
@@ -159,7 +154,7 @@ export class Ide extends Component {
     //Passing to share function
     const shareId = await share(languageId, code);
     this.updateShareId(shareId.data.data._id);
-    this.updateModalShow(true);
+    this.updateShareModalShow(true);
   };
 
   getSharedCode = async (shareId) => {
@@ -169,12 +164,16 @@ export class Ide extends Component {
     this.updateLanguage(result.data.data.language_id);
   };
 
+  login = async () => {
+    this.updateLoginModalShow(true);
+  };
+
   render() {
-    if (this.state.width > 767) {
+    if (this.state.width >= 767) {
       return (
         <div className="Ide">
           <SplitPane split="horizontal" allowResize={false}>
-            <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} languageId={this.state.languageId} fontSize={this.state.fontSize} code={this.state.code} />
+            <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} login={this.login} languageId={this.state.languageId} fontSize={this.state.fontSize} code={this.state.code} />
             <SplitPane split="vertical" minSize={0} maxSize={-1} defaultSize="60%">
               <IdeEditor languageId={this.state.languageId} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
               <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
@@ -183,14 +182,15 @@ export class Ide extends Component {
               </SplitPane>
             </SplitPane>
           </SplitPane>
-          <IdeModal triggerModalShowUpdate={this.updateModalShow} modalShow={this.state.modalShow} shareId={this.state.shareId} />
+          <IdeShareModal triggerShareModalShowUpdate={this.updateShareModalShow} shareModalShow={this.state.shareModalShow} shareId={this.state.shareId} />
+          <IdeLoginModal triggerLoginModalShowUpdate={this.updateLoginModalShow} loginModalShow={this.state.loginModalShow} />
         </div>
       );
     } else {
       return (
         <div className="Ide">
           <SplitPane split="horizontal" allowResize={false}>
-            <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} languageId={this.state.languageId} fontSize={this.state.fontSize} code={this.state.code} />
+            <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} login={this.login} languageId={this.state.languageId} fontSize={this.state.fontSize} code={this.state.code} />
             <SplitPane split="horizontal" minSize={0} maxSize={-5} defaultSize="50%">
               <IdeEditor languageId={this.state.languageId} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
               <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
@@ -199,7 +199,8 @@ export class Ide extends Component {
               </SplitPane>
             </SplitPane>
           </SplitPane>
-          <IdeModal triggerModalShowUpdate={this.updateModalShow} modalShow={this.state.modalShow} shareId={this.state.shareId} />
+          <IdeShareModal triggerShareModalShowUpdate={this.updateShareModalShow} shareModalShow={this.state.shareModalShow} shareId={this.state.shareId} />
+          <IdeLoginModal triggerLoginModalShowUpdate={this.updateLoginModalShow} loginModalShow={this.state.loginModalShow} />
         </div>
       );
     }
