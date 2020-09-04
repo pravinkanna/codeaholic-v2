@@ -80,16 +80,16 @@ class IdeNavbar extends Component {
             </DropdownButton>
 
             <DropdownButton className="fontSizeBtn" title={this.sizeName[fontSize]} onSelect={this.handleFontSize}>
-              <Dropdown.Item className={fontSize === "14" ? "selected" : ""} eventKey="14">
+              <Dropdown.Item className={fontSize === 14 ? "selected" : ""} eventKey="14">
                 14px
               </Dropdown.Item>
-              <Dropdown.Item className={fontSize === "16" ? "selected" : ""} eventKey="16">
+              <Dropdown.Item className={fontSize === 16 ? "selected" : ""} eventKey="16">
                 16px
               </Dropdown.Item>
-              <Dropdown.Item className={fontSize === "18" ? "selected" : ""} eventKey="18">
+              <Dropdown.Item className={fontSize === 18 ? "selected" : ""} eventKey="18">
                 18px
               </Dropdown.Item>
-              <Dropdown.Item className={fontSize === "20" ? "selected" : ""} eventKey="20">
+              <Dropdown.Item className={fontSize === 20 ? "selected" : ""} eventKey="20">
                 20px
               </Dropdown.Item>
             </DropdownButton>
