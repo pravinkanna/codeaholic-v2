@@ -167,6 +167,7 @@ export class Ide extends Component {
   login = async () => {
     this.updateLoginModalShow(true);
   };
+  // split= {this.state.width >= 767?"vertical":"horizontal"}
 
   render() {
     if (this.state.width >= 767) {

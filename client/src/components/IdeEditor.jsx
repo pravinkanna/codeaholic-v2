@@ -77,7 +77,6 @@ class IdeEditor extends Component {
           highlightActiveLine={false}
           placeholder={"Write your code Here"}
           width="100%"
-          height="100%"
           value={this.props.code}
           setOptions={{
             tabSize: 4,

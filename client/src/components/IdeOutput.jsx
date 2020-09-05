@@ -21,7 +21,7 @@ export class IdeOutput extends Component {
       <div className="IdeComponent IdeOutput">
         <p>Output</p>
         <textarea readOnly name="output" style={{ color: this.props.isError ? "#ff0033" : "#ffffff" }} disabled={this.props.isLoading} value={this.props.isLoading ? "" : this.props.output}></textarea>
-        {this.props.isLoading ? <Spinner style={spinnerStyle} className="spinner" as="span" animation="border" size="lg" role="status" aria-hidden="true" /> : "Run"}
+        {this.props.isLoading ? <Spinner style={spinnerStyle} className="spinner" as="span" animation="border" size="lg" role="status" aria-hidden="true" /> : ""}
       </div>
     );
   }

@@ -8,10 +8,10 @@
   padding-left: 65px;
 }
 
-.modal-body .login-button {
-  height: 50px;
+.oauth-login {
+  height: 40px;
 }
 
-.modal-body .login-button img {
-  height: 35px;
+.oauth-login img {
+  height: 30px;
 }
