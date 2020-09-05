@@ -134,10 +134,10 @@ export class Ide extends Component {
       const result = await run(languageId, code, input);
 
       //Setting Output in State
-      const output = result.data.data.stdout || result.data.data.stderr || result.data.data.error || result.data.data.compile_output || "";
+      const output = result.data.data.stdout || result.data.data.stderr || result.data.data.error || result.data.data.compile_output || result.data.data.message || "";
       this.updateOutput(output);
 
-      //Setting Status ID in Stateas
+      //Setting Status ID in States
       result.data.data.status.id === 3 ? this.updateIsError(false) : this.updateIsError(true);
 
       //Stopping Spinner
