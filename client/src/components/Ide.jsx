@@ -170,41 +170,22 @@ export class Ide extends Component {
   // split= {this.state.width >= 767?"vertical":"horizontal"}
 
   render() {
-    if (this.state.width >= 767) {
-      return (
-        <div className="Ide">
-          <SplitPane split="horizontal" allowResize={false}>
-            <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} login={this.login} languageId={this.state.languageId} fontSize={this.state.fontSize} code={this.state.code} />
-            <SplitPane split="vertical" minSize={0} maxSize={-1} defaultSize="60%">
-              <IdeEditor languageId={this.state.languageId} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
-              <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
-                <IdeInput triggerInputUpdate={this.updateInput} />
-                <IdeOutput output={this.state.output} isError={this.state.isError} isLoading={this.state.isLoading} />
-              </SplitPane>
+    return (
+      <div className="Ide">
+        <SplitPane split="horizontal" allowResize={false}>
+          <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} login={this.login} languageId={this.state.languageId} fontSize={this.state.fontSize} code={this.state.code} />
+          <SplitPane split={this.state.width >= 767 ? "vertical" : "horizontal"} minSize={0} maxSize={-5} defaultSize="60%">
+            <IdeEditor languageId={this.state.languageId} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
+            <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
+              <IdeInput triggerInputUpdate={this.updateInput} />
+              <IdeOutput output={this.state.output} isError={this.state.isError} isLoading={this.state.isLoading} />
             </SplitPane>
           </SplitPane>
-          <IdeShareModal triggerShareModalShowUpdate={this.updateShareModalShow} shareModalShow={this.state.shareModalShow} shareId={this.state.shareId} />
-          <IdeLoginModal triggerLoginModalShowUpdate={this.updateLoginModalShow} loginModalShow={this.state.loginModalShow} />
-        </div>
-      );
-    } else {
-      return (
-        <div className="Ide">
-          <SplitPane split="horizontal" allowResize={false}>
-            <IdeNavbar triggerLanguageUpdate={this.updateLanguage} triggerFontSizeUpdate={this.updateFontSize} shareCode={this.shareCode} login={this.login} languageId={this.state.languageId} fontSize={this.state.fontSize} code={this.state.code} />
-            <SplitPane split="horizontal" minSize={0} maxSize={-5} defaultSize="50%">
-              <IdeEditor languageId={this.state.languageId} fontSize={this.state.fontSize} triggerCodeUpdate={this.updateCode} isLoading={this.state.isLoading} code={this.state.code} run={this.runCode} />
-              <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
-                <IdeInput triggerInputUpdate={this.updateInput} />
-                <IdeOutput output={this.state.output} isError={this.state.isError} isLoading={this.state.isLoading} />
-              </SplitPane>
-            </SplitPane>
-          </SplitPane>
-          <IdeShareModal triggerShareModalShowUpdate={this.updateShareModalShow} shareModalShow={this.state.shareModalShow} shareId={this.state.shareId} />
-          <IdeLoginModal triggerLoginModalShowUpdate={this.updateLoginModalShow} loginModalShow={this.state.loginModalShow} />
-        </div>
-      );
-    }
+        </SplitPane>
+        <IdeShareModal triggerShareModalShowUpdate={this.updateShareModalShow} shareModalShow={this.state.shareModalShow} shareId={this.state.shareId} />
+        <IdeLoginModal triggerLoginModalShowUpdate={this.updateLoginModalShow} loginModalShow={this.state.loginModalShow} />
+      </div>
+    );
   }
 }
 
