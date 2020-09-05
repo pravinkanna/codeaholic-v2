@@ -3,7 +3,7 @@ const axios = require('axios');
 
 //@description Run Single Submission
 //@route POST /api/ide/
-//@description Public
+//@access Public
 exports.runSubmission = async (req, res, next) => {
     const { language_id, source_code, stdin } = req.body;
     try {
