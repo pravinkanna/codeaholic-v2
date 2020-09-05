@@ -3,7 +3,7 @@ const Share = require('../models/Share');
 
 //@description Share code
 //@route POST /api/ide/share/:id
-//@description Public
+//@access Public
 exports.getShare = async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -39,7 +39,7 @@ exports.getShare = async (req, res, next) => {
 
 //@description Share code
 //@route POST /api/ide/share/
-//@description Public
+//@access Public
 exports.createShare = async (req, res, next) => {
     try {
         //Creating entry in DB
@@ -69,7 +69,7 @@ exports.createShare = async (req, res, next) => {
 
 //@description Delete Shared code
 //@route DELETE /api/ide/share/
-//@description Public
+//@access Public
 exports.deleteShare = async (req, res, next) => {
     try {
         const id = req.params.id;
