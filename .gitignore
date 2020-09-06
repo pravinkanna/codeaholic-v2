@@ -5,7 +5,7 @@ node_modules
 client/node_modules/
 
 # config files
-config/
+config/config.env
 .env
 .vscode
 

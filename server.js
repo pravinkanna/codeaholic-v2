@@ -12,23 +12,21 @@ const connectDB = require('./config/db');
 const PORT = process.env.PORT || 3002;
 
 const ide = require('./routes/ide');
-const auth = require('./routes/auth');
+const user = require('./routes/user');
+
 
 //Load configs
-dotenv.config({ path: './config/config.env' })
-
-//Passport config
-require('./config/passport')(passport);
+dotenv.config({ path: './config/config.env' });
 
 //Connect to Database
 connectDB();
 
+//Cookie parser middleware 
+app.use(cookieParser());
+
 //Express body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-//Cookie parser middleware 
-app.use(cookieParser());
 
 //Morgan middleware
 if (process.env.NODE_ENV === 'development') {
@@ -47,10 +45,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 //Routes
 app.use('/api/ide', ide);
-app.use('/api/auth', auth);
+app.use('/api/user', user);
 
 if (process.env.NODE_ENV === 'production') {
     // To use Production Build
