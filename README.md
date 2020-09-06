@@ -1,6 +1,6 @@
 # Codeaholic IDE
 
-**Demo: ** [https://ide.pravinkanna.me](https://ide.pravinkanna.me)
+**Demo:** [https://ide.pravinkanna.me](https://ide.pravinkanna.me)
 
 Codeaholic IDE is a cloud-based, open-source, mobile-ready, online-IDE where you can run code in most of the languages and share with others
 
