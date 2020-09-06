@@ -117,7 +117,7 @@ export class IdeLoginModal extends Component {
               <Form onSubmit={this.submitRegister}>
                 <Form.Group controlId="formRegisterName">
                   <Form.Label>Name </Form.Label>
-                  <Form.Control ref={this.name} onChange={this.handleRegister} type="text" placeholder="Enter email" />
+                  <Form.Control ref={this.name} onChange={this.handleRegister} type="text" placeholder="Enter Name" />
                 </Form.Group>
 
                 <Form.Group controlId="formRegisterEmail">
