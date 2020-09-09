@@ -34,20 +34,20 @@ Install the dependencies and devDependencies.
 ```sh
 $ cd codeaholic-v2
 $ npm install
-$ cd clinet/
+$ cd client/
 $ npm install
 ```
 
 For development environments...
 
 ```sh
-$ node run dev
+$ npm run dev
 ```
 
 For production environments...
 
 ```sh
-$ NODE_ENV=production npm start
+$ NODE_ENV=production node server.js
 ```
 
 ### Todos
