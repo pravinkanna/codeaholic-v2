@@ -1,9 +1,9 @@
 import React, { createContext, useState, useEffect } from 'react';
-import auth from '../api/auth';
+import auth from '../apis/auth';
 
-export const Auth = createContext();
+export const AuthContext = createContext();
 
-export default ({ children }) => {
+export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -12,6 +12,7 @@ export default ({ children }) => {
         async function fetchUser() {
             try {
                 const data = await auth.isAuthenticated()
+                console.log(data);
                 setUser(data.user);
                 setIsAuthenticated(data.isAuthenticated);
                 setIsLoaded(true);
@@ -20,14 +21,13 @@ export default ({ children }) => {
             }
         }
         fetchUser();
-
     }, [])
     return (
         <div>
             {!isLoaded ? <h1>Loading</h1> :
-                <Auth.Provider value={{ user, setUser, isAuthenticated, setIsAuthenticated }}>
+                <AuthContext.Provider value={{ user, setUser, isAuthenticated, setIsAuthenticated }}>
                     {children}
-                </Auth.Provider>}
+                </AuthContext.Provider>}
         </div>
     )
 }

@@ -2,14 +2,18 @@ const axios = require('axios')
 
 export default {
     login: async (email, password) => {
+        let user
         try {
-            const user = await axios.post('/api/user/login', {
+            user = await axios.post('/api/user/login', {
                 email: email,
-                password: password
+                password: password,
+                role: "user"
             })
+            console.log(user);
             return user;
         } catch (err) {
-            console.log(err.message);
+            if (err.response.status === 401)
+                return err.response
         }
     },
 
@@ -18,10 +22,13 @@ export default {
             const user = await axios.post('/api/user/register', {
                 name: name,
                 email: email,
-                password: password
+                password: password,
+                role: "user"
             })
             return user;
         } catch (err) {
+            if (err.response.status === 400)
+                return err.response
             console.log(err.message);
         }
 
@@ -29,7 +36,7 @@ export default {
 
     logout: async () => {
         try {
-            const result = await axios.get(`/api/user/logout}`)
+            const result = await axios.get(`/api/user/logout`)
             return result;
         } catch (err) {
             console.log(err.message);
@@ -39,14 +46,13 @@ export default {
     isAuthenticated: async () => {
         try {
             const result = await axios.get(`/api/user/authenticated`)
-            console.log(result);
             if (result.status !== 401)
-                return result;
+                return result.data;
             else
-                return { isAuthenticated: false, user: { email: "", role: "" } }
+                return { isAuthenticated: false, user: { name: "", email: "", role: "" } }
         } catch (err) {
             console.log(err.message);
-            return { isAuthenticated: false, user: { email: "", role: "" } }
+            return { isAuthenticated: false, user: { name: "", email: "", role: "" } }
 
         }
     }

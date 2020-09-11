@@ -1,26 +1,23 @@
-import React, { Component } from "react";
-import { Event } from "./tracking";
+import React, { useRef, useContext } from "react";
+import { IdeContext } from "../contexts/IdeContext";
 import AceEditor from "react-ace";
 import { Button, Spinner } from "react-bootstrap";
+
+import { Event } from "./tracking";
+import { run } from "../apis/run";
+
 import "./IdeEditor.css";
 
 import "ace-builds/src-min-noconflict/mode-c_cpp";
 import "ace-builds/src-min-noconflict/mode-python";
 import "ace-builds/src-min-noconflict/mode-java";
-import "ace-builds/src-noconflict/ext-language_tools";
-
 import "ace-builds/webpack-resolver";
 
-class IdeEditor extends Component {
-  constructor(props) {
-    super(props);
-    this.aceEditor = React.createRef();
-    this.state = {
-      isEmpty: true,
-    };
-  }
+function IdeEditor() {
+  const aceEditor = useRef(null);
+  const { languageId, fontSize, code, setCode, input, setIsError, isLoading, setOutput, setIsLoading } = useContext(IdeContext);
 
-  modes = {
+  const modes = {
     50: "c_cpp",
     54: "c_cpp",
     62: "java",
@@ -29,62 +26,80 @@ class IdeEditor extends Component {
     82: "mysql",
   };
 
-  handleChange = () => {
-    const code = this.aceEditor.current.editor.getValue();
-    this.props.triggerCodeUpdate(code);
+  const handleChange = () => {
+    setCode(aceEditor.current.editor.getValue());
   };
 
-  handleClick = () => {
-    this.props.run();
+  const handleClick = () => {
+    runCode();
     Event("Run", "Code Run Button", "IDE_PAGE");
   };
 
-  componentDidUpdate() {
-    this.aceEditor.current.editor.resize();
-  }
+  // useEffect(() => {
+  //   setWidth(aceEditor.current.editor.resize());
+  // }, [aceEditor]);
 
-  render() {
-    const { languageId, fontSize } = this.props;
+  const runCode = async () => {
+    try {
+      //Starting Spinner
+      setIsLoading(true);
 
-    return (
-      <div className="IdeEditor IdeComponent">
-        <ul className="EditorNav">
-          <li>
-            <p>Your&nbsp;Code</p>
-          </li>
-          <li>
-            <Button variant="primary" size="sm" onClick={this.handleClick} disabled={isEmpty(this.props.code) || this.props.isLoading}>
-              {this.props.isLoading ? (
-                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-              ) : (
-                <>
-                  <i className="fas fa-play"></i>&nbsp;&nbsp;Run
-                </>
-              )}
-            </Button>
-          </li>
-        </ul>
+      //Passing to run function
+      const result = await run(languageId, code, input);
 
-        <AceEditor
-          ref={this.aceEditor}
-          onChange={this.handleChange}
-          mode={this.modes[languageId]}
-          theme="monokai"
-          showPrintMargin={false}
-          showGutter={true}
-          focus={true}
-          fontSize={fontSize}
-          highlightActiveLine={false}
-          placeholder={"Write your code Here"}
-          width="100%"
-          value={this.props.code}
-          setOptions={{
-            tabSize: 4,
-          }}
-        />
-      </div>
-    );
-  }
+      //Setting Output in State
+      const output = result.data.data.stdout || result.data.data.stderr || result.data.data.error || result.data.data.compile_output || result.data.data.message || "";
+      setOutput(output);
+
+      //Setting Status ID in States
+      result.data.data.status.id === 3 ? setIsError(false) : setIsError(true);
+
+      //Stopping Spinner
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <div className="IdeEditor IdeComponent">
+      <ul className="EditorNav">
+        <li>
+          <p>Your&nbsp;Code</p>
+        </li>
+        <li>
+          <Button variant="primary" size="sm" onClick={handleClick} disabled={isEmpty(code) || isLoading}>
+            {isLoading ? (
+              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+            ) : (
+              <>
+                <i className="fas fa-play"></i>&nbsp;&nbsp;Run
+              </>
+            )}
+          </Button>
+        </li>
+      </ul>
+
+      <AceEditor
+        ref={aceEditor}
+        onChange={handleChange}
+        mode={modes[languageId]}
+        theme="monokai"
+        editorProps={{ $blockScrolling: true }}
+        showPrintMargin={false}
+        showGutter={true}
+        focus={true}
+        fontSize={fontSize}
+        highlightActiveLine={false}
+        placeholder={"Write your code Here"}
+        width="100%"
+        value={code}
+        setOptions={{
+          tabSize: 4,
+        }}
+      />
+    </div>
+  );
 }
 
 const isEmpty = (code) => {

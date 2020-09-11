@@ -1,25 +1,18 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
+import { IdeContext } from "../contexts/IdeContext";
 import "./IdeInput.css";
 
-export class IdeInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { input: "" };
-    this.handleChange = this.handleChange.bind(this);
-  }
+export default function IdeInput() {
+  const { setInput } = useContext(IdeContext);
 
-  handleChange = (event) => {
-    this.props.triggerInputUpdate(event.target.value);
+  const handleChange = (event) => {
+    setInput(event.target.value);
   };
 
-  render() {
-    return (
-      <div className="IdeComponent IdeInput">
-        <p>Input</p>
-        <textarea type="text" onChange={this.handleChange}></textarea>
-      </div>
-    );
-  }
+  return (
+    <div className="IdeComponent IdeInput">
+      <p>Input</p>
+      <textarea type="text" onChange={handleChange}></textarea>
+    </div>
+  );
 }
-
-export default IdeInput;

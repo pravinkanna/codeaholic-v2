@@ -17,6 +17,8 @@ export const getShare = async (shareId) => {
         const result = await axios.get(`/api/ide/share/${shareId}`)
         return result;
     } catch (err) {
+        if (err.response.status === 404)
+            return err.response
         console.log(err.message);
     }
 }

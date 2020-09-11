@@ -17,7 +17,7 @@ Codeaholic IDE is a cloud-based, open-source, mobile-ready, online-IDE where you
 - [node.js] - evented I/O for the backend
 - [Express] - fast node.js network app framework
 - [PassportJS] - Authenticate Securely without compromises
-- [jQuery] - duh
+- [MongoDB] - Store the NoSQL way
 
 ### Installation
 

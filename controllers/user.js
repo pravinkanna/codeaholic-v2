@@ -50,7 +50,7 @@ exports.register = async (req, res) => {
 }
 
 //@description Login a user
-//@route GET /api/user/login
+//@route POST /api/user/login
 //@access Public
 exports.login = async (req, res) => {
     if (req.isAuthenticated()) {
@@ -63,7 +63,7 @@ exports.login = async (req, res) => {
 
 
 //@description Logout a user
-//@route POST /api/user/logout
+//@route GET /api/user/logout
 //@access Private
 exports.logout = async (req, res) => {
     res.clearCookie('access_token');
@@ -106,8 +106,9 @@ exports.saveProgram = async (req, res) => {
 //@access Private
 exports.authenticated = async (req, res) => {
     try {
-        const { email, role } = req.user;
-        res.status(200).json({ isAuthenticated: true, user: { email, role } });
+        const { name, email, role } = req.user;
+
+        res.status(200).json({ isAuthenticated: true, user: { name, email, role } });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: { msgBody: ["Error has occurred"], msgError: true } });

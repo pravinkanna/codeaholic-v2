@@ -76,12 +76,13 @@
 /* ##Scrollbar style## */
 
 /* Mobile Responsive*/
-@media (max-width: 992px) {
-  .Navbar {
-    /* padding-bottom: 10px; */
-    /* align-content: center; */
-    /* align-items: center;
-    vertical-align: middle; */
+@media (max-width: 1060px) {
+  .navbar {
+    padding: 0.5rem 0rem;
+  }
+
+  .Navbar .btn-primary {
+    margin-right: 10px;
   }
 }
 
