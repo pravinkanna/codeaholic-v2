@@ -14,8 +14,6 @@
 
 .Navbar .Logo {
   height: 40px;
-  color: green !important;
-  fill: green !important;
 }
 
 .Navbar .BrandName {
@@ -45,7 +43,7 @@
 }
 
 .languageBtn .btn-primary {
-  width: 350px !important;
+  width: 300px !important;
 }
 
 .fontSizeBtn .btn-primary {

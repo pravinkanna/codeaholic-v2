@@ -18,12 +18,13 @@ export default {
         }
     },
 
-    register: async (name, email, password) => {
+    register: async (name, email, password, password2) => {
         try {
             const user = await axios.post('/api/user/register', {
                 name: name,
                 email: email,
                 password: password,
+                password2: password2,
                 role: "user"
             })
             return user;

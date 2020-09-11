@@ -70,6 +70,7 @@ function IdeNavbar() {
 
   const handleLogout = () => {
     auth.logout();
+    setIsAuthenticated(false);
   };
 
   const unAuthButton = (

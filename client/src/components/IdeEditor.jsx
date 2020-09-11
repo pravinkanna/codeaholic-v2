@@ -11,6 +11,9 @@ import "./IdeEditor.css";
 import "ace-builds/src-min-noconflict/mode-c_cpp";
 import "ace-builds/src-min-noconflict/mode-python";
 import "ace-builds/src-min-noconflict/mode-java";
+import "ace-builds/src-min-noconflict/mode-javascript";
+import "ace-builds/src-min-noconflict/mode-php";
+import "ace-builds/src-min-noconflict/mode-mysql";
 import "ace-builds/webpack-resolver";
 
 function IdeEditor() {
@@ -21,6 +24,7 @@ function IdeEditor() {
     50: "c_cpp",
     54: "c_cpp",
     62: "java",
+    63: "javascript",
     71: "python",
     68: "php",
     82: "mysql",

@@ -84,10 +84,21 @@
   .Navbar .btn-primary {
     margin-right: 10px;
   }
+
+  .languageBtn .btn-primary {
+    width: 300px !important;
+  }
+}
+
+@media (max-width: 990px) {
+  .Navbar {
+    margin: -11px 0;
+  }
 }
 
 @media (max-width: 767px) {
   .Navbar {
+    margin: 0;
     padding: 0;
   }
 

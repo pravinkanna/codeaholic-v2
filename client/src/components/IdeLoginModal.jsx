@@ -5,11 +5,15 @@ import { IdeContext } from "../contexts/IdeContext";
 import auth from "../apis/auth";
 
 import "./IdeLoginModal.css";
+import { AuthContext } from "../contexts/AuthContext";
 // const logo = require("./googleLogo.svg");
 
 export default function IdeLoginModal() {
   const [modalType, setModalType] = useState("login");
-  const [wrongCredentials, setWrongCredentials] = useState(false);
+  const [wrongLoginCredentials, setWrongLoginCredentials] = useState(false);
+  const [wrongRegisterCredentials, setWrongRegisterCredentials] = useState(false);
+  const [registered, setRegistered] = useState(false);
+
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [name, setName] = useState("");
@@ -18,6 +22,7 @@ export default function IdeLoginModal() {
   const [password2, setPassword2] = useState("");
 
   const { loginModalShow, setLoginModalShow } = useContext(IdeContext);
+  const { setIsAuthenticated } = useContext(AuthContext);
 
   const loginEmailBox = useRef(null);
   const loginPasswordBox = useRef(null);
@@ -26,9 +31,23 @@ export default function IdeLoginModal() {
   const passwordBox = useRef(null);
   const password2Box = useRef(null);
 
-  // const showModal = () => {
-  //   setLoginModalShow(true);
-  // };
+  const loginErrorMsg = (
+    <Alert variant="danger" display="none">
+      Email or Password is wrong!
+    </Alert>
+  );
+
+  let registerErrorMsg = (
+    <Alert variant="danger" display="none">
+      Given details is not valid
+    </Alert>
+  );
+
+  let registerSuccessMsg = (
+    <Alert variant="success" display="none">
+      User Successfully Registered
+    </Alert>
+  );
 
   const hideModal = () => {
     setLoginModalShow(false);
@@ -47,19 +66,30 @@ export default function IdeLoginModal() {
 
   const submitLogin = async () => {
     if (loginEmail && loginPassword) {
-      const user = await auth.login(loginEmail, loginPassword);
-      if (user.data === "Unauthorized") {
-        setWrongCredentials(true);
+      const res = await auth.login(loginEmail, loginPassword);
+      if (res.data === "Unauthorized") {
+        setWrongLoginCredentials(true);
       } else {
-        setWrongCredentials(false);
+        setWrongLoginCredentials(false);
+        setIsAuthenticated(true);
+        setLoginModalShow(false);
       }
+    } else {
+      setWrongLoginCredentials(true);
     }
   };
 
   const submitRegister = async () => {
     if (name && email && password && password2) {
-      const user = await auth.register(name, email, password, password2);
-      console.log(user);
+      const res = await auth.register(name, email, password, password2);
+      if (res.data.message.msgError) {
+        setWrongRegisterCredentials(true);
+      } else {
+        setWrongRegisterCredentials(false);
+        setRegistered(true);
+      }
+    } else {
+      setWrongRegisterCredentials(true);
     }
   };
 
@@ -75,12 +105,6 @@ export default function IdeLoginModal() {
     setPassword2(password2Box.current.value);
   };
 
-  const loginErrorMsg = (
-    <Alert variant="danger" display="none">
-      Email or Password is wrong!
-    </Alert>
-  );
-
   if (modalType === "login") {
     return (
       <div className="IdeModal">
@@ -89,7 +113,7 @@ export default function IdeLoginModal() {
             <Modal.Title>Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {wrongCredentials ? loginErrorMsg : ""}
+            {wrongLoginCredentials ? loginErrorMsg : ""}
             <Form onSubmit={submitLogin}>
               <Form.Group controlId="formLoginEmail">
                 <Form.Label>Email </Form.Label>
@@ -125,6 +149,8 @@ export default function IdeLoginModal() {
             <Modal.Title>Register</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            {wrongRegisterCredentials ? registerErrorMsg : ""}
+            {registered ? registerSuccessMsg : ""}
             <Form onSubmit={submitRegister}>
               <Form.Group controlId="formRegisterName">
                 <Form.Label>Name </Form.Label>

@@ -17,7 +17,7 @@ const signToken = userID => {
 exports.register = async (req, res) => {
     try {
         let errors = []
-        const { name, email, password, role } = req.body;
+        const { name, email, password, password2, role } = req.body;
 
         //Checking  fields not empty
         if (!name || !email || !password) {
@@ -27,6 +27,11 @@ exports.register = async (req, res) => {
         //Checking  passwords length
         if (password.length < 6) {
             errors.push("Password should be at least 6 characters");
+        }
+
+        //Checking  both passwords are same
+        if (password !== password2) {
+            errors.push("Password and verify password should be same");
         }
 
         //Checking  fields not empty
