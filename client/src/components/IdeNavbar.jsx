@@ -32,7 +32,7 @@ function IdeNavbar() {
 
   useEffect(() => {
     setIsAuthenticated(isAuthenticated);
-  }, [isAuthenticated]);
+  }, [isAuthenticated, setIsAuthenticated]);
 
   // useEffect(() => {
   //   setLanguageId(languageId);
@@ -49,7 +49,6 @@ function IdeNavbar() {
 
   const handleFontSize = (value) => {
     setFontSize(Number(value));
-    console.log(value, fontSize);
   };
 
   const handleShareCode = async () => {

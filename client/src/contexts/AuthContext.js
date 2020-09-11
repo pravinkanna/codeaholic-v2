@@ -11,8 +11,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         async function fetchUser() {
             try {
-                const data = await auth.isAuthenticated()
-                console.log(data);
+                const data = await auth.isAuthenticated();
                 setUser(data.user);
                 setIsAuthenticated(data.isAuthenticated);
                 setIsLoaded(true);

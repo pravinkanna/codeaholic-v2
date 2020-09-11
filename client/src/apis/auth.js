@@ -9,11 +9,12 @@ export default {
                 password: password,
                 role: "user"
             })
-            console.log(user);
             return user;
         } catch (err) {
             if (err.response.status === 401)
                 return err.response
+            else
+                console.log(err.message);
         }
     },
 
@@ -51,8 +52,11 @@ export default {
             else
                 return { isAuthenticated: false, user: { name: "", email: "", role: "" } }
         } catch (err) {
-            console.log(err.message);
-            return { isAuthenticated: false, user: { name: "", email: "", role: "" } }
+            if (err.response.status === 401)
+                return { isAuthenticated: false, user: { name: "", email: "", role: "" } }
+            else
+                console.log(err.message);
+
 
         }
     }

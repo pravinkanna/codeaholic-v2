@@ -5,12 +5,11 @@ import { IdeContext } from "../contexts/IdeContext";
 import auth from "../apis/auth";
 
 import "./IdeLoginModal.css";
-const logo = require("./googleLogo.svg");
+// const logo = require("./googleLogo.svg");
 
 export default function IdeLoginModal() {
   const [modalType, setModalType] = useState("login");
   const [wrongCredentials, setWrongCredentials] = useState(false);
-  const [show, setShow] = useState(true);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [name, setName] = useState("");
@@ -76,7 +75,7 @@ export default function IdeLoginModal() {
     setPassword2(password2Box.current.value);
   };
 
-  const ErrorMsg = (
+  const loginErrorMsg = (
     <Alert variant="danger" display="none">
       Email or Password is wrong!
     </Alert>
@@ -90,7 +89,7 @@ export default function IdeLoginModal() {
             <Modal.Title>Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {wrongCredentials ? ErrorMsg : ""}
+            {wrongCredentials ? loginErrorMsg : ""}
             <Form onSubmit={submitLogin}>
               <Form.Group controlId="formLoginEmail">
                 <Form.Label>Email </Form.Label>
