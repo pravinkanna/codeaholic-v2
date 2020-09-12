@@ -14,7 +14,10 @@ import { getShare } from "../apis/share";
 
 export default function Ide() {
   const [shareId, setShareId] = useState(null);
+  const [resizeEditor, setResizeEditor] = useState(false);
   const { setCode, setLanguageId, width, setWidth } = useContext(IdeContext);
+
+  const handleChange = () => setResizeEditor((prev) => !prev);
 
   useEffect(() => {
     // Handler to call on window resize
@@ -28,7 +31,7 @@ export default function Ide() {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleResize);
-  }, [setWidth]);
+  }, [width, setWidth]);
 
   useEffect(() => {
     //Function to get code from database and set to context
@@ -51,8 +54,8 @@ export default function Ide() {
     <div className="Ide">
       <SplitPane split="horizontal" allowResize={false}>
         <IdeNavbar />
-        <SplitPane split={width >= 767 ? "vertical" : "horizontal"} minSize={0} maxSize={-5} defaultSize="60%">
-          <IdeEditor />
+        <SplitPane split={width >= 767 ? "vertical" : "horizontal"} minSize={0} maxSize={-5} defaultSize="60%" onChange={handleChange}>
+          <IdeEditor resizeEditor={resizeEditor} setResizeEditor={setResizeEditor} />
           <SplitPane split="horizontal" allowResize={false} defaultSize="50%">
             <IdeInput />
             <IdeOutput />

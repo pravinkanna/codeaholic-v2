@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import { IdeContext } from "../contexts/IdeContext";
 import AceEditor from "react-ace";
 import { Button, Spinner } from "react-bootstrap";
@@ -16,7 +16,7 @@ import "ace-builds/src-min-noconflict/mode-php";
 import "ace-builds/src-min-noconflict/mode-mysql";
 import "ace-builds/webpack-resolver";
 
-function IdeEditor() {
+function IdeEditor(props) {
   const aceEditor = useRef(null);
   const { languageId, fontSize, code, setCode, input, setIsError, isLoading, setOutput, setIsLoading } = useContext(IdeContext);
 
@@ -39,9 +39,9 @@ function IdeEditor() {
     Event("Run", "Code Run Button", "IDE_PAGE");
   };
 
-  // useEffect(() => {
-  //   setWidth(aceEditor.current.editor.resize());
-  // }, [aceEditor]);
+  useEffect(() => {
+    aceEditor.current.editor.resize();
+  }, [props.resizeEditor]);
 
   const runCode = async () => {
     try {

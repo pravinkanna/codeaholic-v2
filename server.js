@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const mongoose = require('mongoose')
+const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const morgan = require('morgan');
 const chalk = require('chalk');
@@ -18,6 +20,11 @@ const user = require('./routes/user');
 //Load configs
 dotenv.config({ path: './config/config.env' });
 
+//Morgan middleware
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
+
 //Connect to Database
 connectDB();
 
@@ -28,17 +35,13 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-//Morgan middleware
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
-}
-
 //Express session Middleware
 app.use(session({
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
 
 //Passport Middleware
