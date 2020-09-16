@@ -47,6 +47,7 @@ $ npm run dev
 For production environments...
 
 ```sh
+$ npm run build
 $ NODE_ENV=production node server.js
 ```
 
