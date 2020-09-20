@@ -1,0 +1,47 @@
+.input-component {
+  background: #15314b;
+  border-bottom: 15px solid red !important;
+  height: 100%;
+  width: 100%;
+}
+
+.input-component p {
+  overflow: hidden;
+  color: #ffffff;
+  width: min-content;
+  padding: 5px 20px;
+  background-color: #001528;
+  height: 2rem;
+  margin: 0;
+}
+
+.input-textarea {
+  height: 100%;
+  background: #001528;
+  overflow: hidden;
+}
+
+.input-component textarea {
+  overflow: hidden;
+  /* Firefox */
+  height: -moz-calc(100% - 2rem);
+  /* WebKit */
+  height: -webkit-calc(100% - 2rem);
+  /* Opera */
+  height: -o-calc(100% - 2rem);
+  /* Standard */
+  height: calc(100% - 2rem);
+  width: 100%;
+  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif !important;
+  /* overflow: hidden; */
+  padding: 20px 30px;
+  background: #001528;
+  color: #ffffff;
+  border: none;
+  overflow: auto;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  resize: none;
+}
