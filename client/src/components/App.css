@@ -1,3 +1,141 @@
 .App {
   background-color: #02203c;
+  touch-action: manipulation;
+  overflow: hidden;
+}
+
+/* Resizer Style */
+.Resizer {
+  background: #02203c;
+  z-index: 15;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+}
+
+.Resizer:hover {
+  background: #626ee3;
+  -webkit-transition: all 2s ease;
+  transition: all 2s ease;
+  z-index: 100 !important;
+}
+
+.Resizer.horizontal {
+  position: relative;
+  height: 11px !important;
+  margin: -5px 0;
+  cursor: row-resize;
+  width: 100%;
+}
+
+.Resizer.vertical {
+  width: 11px !important;
+  margin: 0 -5px;
+  cursor: col-resize;
+}
+
+.Resizer.disabled {
+  cursor: default;
+}
+
+.Resizer.disabled:hover {
+  background-color: #02203c;
+}
+
+/* ##Resizer Styles## */
+
+/* Scrollbar style */
+.ace_scrollbar-v {
+  top: 5px;
+  right: 5px;
+}
+
+.ace_scrollbar-h {
+  right: 5px;
+  left: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-sc ::-webkit-scrollbar-track {
+  background: #001528;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bbccdd;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #626ee3;
+}
+
+/* ##Scrollbar style## */
+
+/* Mobile Responsive*/
+@media (max-width: 1060px) {
+  .navbar {
+    padding: 0.5rem 0rem;
+  }
+
+  .Navbar .btn-primary {
+    margin-right: 10px;
+  }
+
+  .languageBtn .btn-primary {
+    width: 300px !important;
+  }
+}
+
+@media (max-width: 990px) {
+  .Navbar {
+    margin: -11px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .Navbar {
+    margin: 0;
+    padding: 0;
+  }
+
+  .Navbar .Logo {
+    margin-left: 5px;
+    height: 40px;
+  }
+
+  .Navbar .BrandName {
+    font-size: 25px;
+    margin-top: 5px;
+  }
+
+  .ace_scrollbar-v {
+    right: 0;
+    bottom: 20px !important;
+  }
+
+  .ace_scrollbar-h {
+    bottom: 20px !important;
+  }
+
+  .IdeEditor {
+    border-left: 15px solid #02203c;
+    border-right: 15px solid #02203c;
+    border-bottom: 0 !important;
+  }
+
+  .IdeInput {
+    border-right: 15px solid #02203c;
+    border-left: 15px solid #02203c;
+  }
+
+  .IdeOutput {
+    border-right: 15px solid #02203c;
+    border-left: 15px solid #02203c;
+  }
 }
