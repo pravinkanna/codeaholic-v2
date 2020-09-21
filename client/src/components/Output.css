@@ -1,11 +1,12 @@
-.output-component {
+.IdeOutput {
   background: #15314b;
   height: 100%;
   width: 100%;
+  border-right: 15px solid #02203c;
+  border-bottom: 15px solid #02203c;
 }
 
-.output-component p {
-  overflow: hidden;
+.IdeOutput p {
   color: #ffffff;
   width: min-content;
   padding: 5px 20px;
@@ -14,14 +15,16 @@
   margin: 0;
 }
 
-.output-textarea {
+.output {
   height: 100%;
   background: #001528;
-  overflow: hidden;
 }
 
-.output-textarea textarea {
-  overflow: hidden;
+.spinner {
+  background: #001528;
+}
+
+.IdeOutput textarea {
   /* Firefox */
   height: -moz-calc(100% - 2rem);
   /* WebKit */
@@ -32,7 +35,7 @@
   height: calc(100% - 2rem);
   width: 100%;
   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif !important;
-  /* overflow: hidden; */
+  overflow: hidden;
   padding: 20px 30px;
   background: #001528;
   color: #ffffff;
@@ -44,16 +47,12 @@
   box-shadow: none;
   resize: none;
 }
-
-.spinner {
-  background: #001528;
-}
-
-.ide-component .spinner {
+/* 
+.IdeOutput .spinner {
   color: white;
   left: 50%;
   height: 50px;
   width: 50px;
   display: flex;
   justify-content: center;
-}
+} */

@@ -10,13 +10,9 @@ export default function IdeInput() {
   };
 
   return (
-    <div className="input-component">
-      <div className="input-nav">
-        <p>Input</p>
-      </div>
-      <div className="input-textarea">
-        <textarea type="text" onChange={handleChange}></textarea>
-      </div>
+    <div className="IdeComponent IdeInput">
+      <p>Input</p>
+      <textarea type="text" onChange={handleChange}></textarea>
     </div>
   );
 }

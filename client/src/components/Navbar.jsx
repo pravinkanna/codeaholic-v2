@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { Event } from "./tracking";
-import { Button, Navbar, Nav, DropdownButton, Dropdown, NavDropdown } from "react-bootstrap";
+import { Event } from "../tracking";
+import { Button, Navbar, Nav, DropdownButton, Dropdown } from "react-bootstrap";
 import { AuthContext } from "../contexts/AuthContext";
 import { IdeContext } from "../contexts/IdeContext";
 import "./Navbar.css";
@@ -74,70 +74,71 @@ function IdeNavbar() {
   };
 
   const unAuthButton = (
-    <Button className="button login-button" onClick={handleLogin}>
+    <Button className="login" onClick={handleLogin}>
       <i className="fas fa-sign-in-alt"></i>
       &nbsp;Login
     </Button>
   );
 
   const authButton = (
-    <NavDropdown className="button myaccount-button" title={"My Account"}>
-      <NavDropdown.Item>My Files</NavDropdown.Item>
-      <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
-    </NavDropdown>
+    <DropdownButton className="fontSizeBtn" title={"My Account"}>
+      <Dropdown.Item>My Files</Dropdown.Item>
+      <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+    </DropdownButton>
   );
 
   return (
-    <Navbar sticky="top" variant="dark" expand="lg" className="Navbar">
-      <Navbar.Brand href="/" className="NavbarBrand">
-        <img src={logo} className="Logo" alt="PK logo" />
-        &nbsp;<h1 className="BrandName">Pravin IDE</h1>
+    <Navbar variant="dark" expand="lg" className="Navbar">
+      <Navbar.Brand href="#home" className="NavbarBrand">
+        <img src={logo} alt="logo" className="Logo" />
+        &nbsp; <h1 className="BrandName">Pravin IDE</h1>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          <NavDropdown className="button language-button" title={languageName[languageId]} onSelect={handleLanguage}>
-            <NavDropdown.Item className={languageId === "50" ? "active" : ""} eventKey="50">
+          <DropdownButton className="languageBtn" title={languageName[languageId]} onSelect={handleLanguage}>
+            <Dropdown.Item className={languageId === "50" ? "selected" : ""} eventKey="50">
               C (GCC 9.2.0)
-            </NavDropdown.Item>
-            <NavDropdown.Item className={languageId === "54" ? "active" : ""} eventKey="54">
+            </Dropdown.Item>
+            <Dropdown.Item className={languageId === "54" ? "selected" : ""} eventKey="54">
               C++ (GCC 9.2.0)
-            </NavDropdown.Item>
-            <NavDropdown.Item className={languageId === "71" ? "active" : ""} eventKey="71">
+            </Dropdown.Item>
+            <Dropdown.Item className={languageId === "71" ? "selected" : ""} eventKey="71">
               Python (3.8.1)
-            </NavDropdown.Item>
-            <NavDropdown.Item className={languageId === "62" ? "active" : ""} eventKey="62">
+            </Dropdown.Item>
+            <Dropdown.Item className={languageId === "62" ? "selected" : ""} eventKey="62">
               Java (OpenJDK 13.0.1)
-            </NavDropdown.Item>
-            <NavDropdown.Item className={languageId === "63" ? "active" : ""} eventKey="63">
+            </Dropdown.Item>
+            <Dropdown.Item className={languageId === "63" ? "selected" : ""} eventKey="63">
               JavaScript (Node.js 12.14.0)
-            </NavDropdown.Item>
-            <NavDropdown.Item className={languageId === "68" ? "active" : ""} eventKey="68">
+            </Dropdown.Item>
+            <Dropdown.Item className={languageId === "68" ? "selected" : ""} eventKey="68">
               PHP (7.4.1)
-            </NavDropdown.Item>
-            <NavDropdown.Item className={languageId === "82" ? "active" : ""} eventKey="82">
+            </Dropdown.Item>
+            <Dropdown.Item className={languageId === "82" ? "selected" : ""} eventKey="82">
               SQL (SQLite 3.27.2)
-            </NavDropdown.Item>
-          </NavDropdown>
+            </Dropdown.Item>
+          </DropdownButton>
 
-          <NavDropdown className="button fontsize-button" title={sizeName[fontSize]} onSelect={handleFontSize}>
-            <NavDropdown.Item className={fontSize === 14 ? "active" : ""} eventKey="14">
+          <DropdownButton className="fontSizeBtn" title={sizeName[fontSize]} onSelect={handleFontSize}>
+            <Dropdown.Item className={fontSize === 14 ? "selected" : ""} eventKey="14">
               14px
-            </NavDropdown.Item>
-            <NavDropdown.Item className={fontSize === 16 ? "active" : ""} eventKey="16">
+            </Dropdown.Item>
+            <Dropdown.Item className={fontSize === 16 ? "selected" : ""} eventKey="16">
               16px
-            </NavDropdown.Item>
-            <NavDropdown.Item className={fontSize === 18 ? "active" : ""} eventKey="18">
+            </Dropdown.Item>
+            <Dropdown.Item className={fontSize === 18 ? "selected" : ""} eventKey="18">
               18px
-            </NavDropdown.Item>
-            <NavDropdown.Item className={fontSize === 20 ? "active" : ""} eventKey="20">
+            </Dropdown.Item>
+            <Dropdown.Item className={fontSize === 20 ? "selected" : ""} eventKey="20">
               20px
-            </NavDropdown.Item>
-          </NavDropdown>
+            </Dropdown.Item>
+          </DropdownButton>
 
-          <Button className="button share-button" onClick={handleShareCode}>
+          <Button className="share" onClick={handleShareCode}>
             <i className="fas fa-share-alt"></i>&nbsp;Share
           </Button>
+
           {isAuthenticated ? authButton : unAuthButton}
         </Nav>
       </Navbar.Collapse>

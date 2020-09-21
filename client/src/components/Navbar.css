@@ -1,63 +1,67 @@
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
 .Navbar {
-  background-color: #02203c;
-  /* height: 60px; */
-  /* z-index: 200; */
+  /* position: relative; */
+  z-index: 100;
   width: 100%;
+  background-color: #02203c !important;
+  border-right: 15px solid #02203c;
+  border-left: 15px solid #02203c;
 }
 
-.navbar {
-  padding: 6px 1rem !important;
-}
 .Navbar .BrandName {
   vertical-align: middle;
-  margin: 0;
 }
 
 .Navbar .Logo {
   height: 40px;
-  vertical-align: middle;
 }
 
 .Navbar .BrandName {
   font-size: 30px;
+  margin-top: 10px;
   display: inline-block;
   font-family: "Permanent Marker";
 }
 
-.Navbar .button {
-  color: #fff;
+.navbar-collapse.show .ml-auto.navbar-nav button {
+  width: 100% !important;
   background-color: #15314b;
+  align-items: center;
   border: none;
-  border-radius: 5px;
+}
+
+.navbar-collapse.show .ml-auto.navbar-nav .dropdown-item {
+  align-items: center;
+}
+
+.Navbar .btn-primary {
+  color: #fff;
+  background-color: #15314b !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
   font-weight: 900;
-  margin-left: 20px;
+  margin-right: 20px;
 }
 
-.Navbar .button > a {
-  color: #fff !important;
+.languageBtn .btn-primary {
+  width: 300px !important;
 }
 
-.language-button {
-  padding: 0 20px;
+.fontSizeBtn .btn-primary {
+  width: 150px !important;
 }
 
-.fontsize-button {
-  padding: 0 20px;
+.share {
+  width: 100px !important;
 }
 
-.Navbar .navbar-nav > .button:hover {
-  background-color: #626ee3;
-  transition: 0.4s;
-  transition-timing-function: ease-in-out;
-}
-
-.dropdown > a {
-  text-align: center;
+.btn-primary:hover {
+  color: #fff;
+  background-color: #626ee3 !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 .dropdown-menu {
-  background: #15314b !important;
+  background: #15314b;
 }
 
 .dropdown-menu a {
@@ -66,12 +70,9 @@
 
 .dropdown-menu a:hover {
   background-color: #626ee3;
-  color: #ffffff;
-  transition: 0.4s;
-  transition-timing-function: ease-in-out;
 }
 
-.dropdown-menu > .active {
-  background-color: #e0e0e0 !important;
-  color: #15314b !important;
+.dropdown-menu .selected {
+  background-color: #e0e0e0;
+  color: #15314b;
 }

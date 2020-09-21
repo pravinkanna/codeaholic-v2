@@ -1,12 +1,12 @@
 import React, { useEffect, useContext, useState } from "react";
 import SplitPane from "react-split-pane";
 
-import IdeNavbar from "./IdeNavbar";
-import IdeEditor from "./IdeEditor";
-import IdeInput from "./IdeInput";
-import IdeOutput from "./IdeOutput";
-import IdeShareModal from "./IdeShareModal";
-import IdeLoginModal from "./IdeLoginModal";
+import IdeNavbar from "./Navbar";
+import IdeEditor from "./Editor";
+import IdeInput from "./Input";
+import IdeOutput from "./Output";
+import IdeShareModal from "./ShareModal";
+import IdeLoginModal from "./LoginModal";
 import "./Ide.css";
 
 import { IdeContext } from "../contexts/IdeContext";

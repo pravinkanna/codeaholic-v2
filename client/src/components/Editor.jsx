@@ -3,7 +3,7 @@ import { IdeContext } from "../contexts/IdeContext";
 import AceEditor from "react-ace";
 import { Button, Spinner } from "react-bootstrap";
 
-import { Event } from "./tracking";
+import { Event } from "../tracking";
 import { run } from "../apis/run";
 
 import "./Editor.css";
@@ -67,42 +67,36 @@ function IdeEditor(props) {
 
   return (
     <div className="IdeEditor IdeComponent">
-      {
-        <div className="EditorNav">
-          <p className="logo">Your&nbsp;Code</p>
-          <ul className="nav-btn">
-            <li>
-              <Button className="btn btn-save" variant="primary" size="sm" onClick={handleClick} disabled={isEmpty(code) || isLoading}>
-                <i className="fas fa-save">&nbsp;&nbsp;Save</i>
-              </Button>
-            </li>
-            <li>
-              <Button className="btn btn-run" variant="success" size="sm" onClick={handleClick} disabled={isEmpty(code) || isLoading}>
-                {isLoading ? (
-                  <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-                ) : (
-                  <>
-                    <i className="fas fa-play">&nbsp;&nbsp;Run</i>
-                  </>
-                )}
-              </Button>
-            </li>
-          </ul>
-        </div>
-      }
+      <ul className="EditorNav">
+        <li>
+          <p>Your&nbsp;Code</p>
+        </li>
+        <li>
+          <Button variant="primary" size="sm" onClick={handleClick} disabled={isEmpty(code) || isLoading}>
+            {isLoading ? (
+              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+            ) : (
+              <>
+                <i className="fas fa-play"></i>&nbsp;&nbsp;Run
+              </>
+            )}
+          </Button>
+        </li>
+      </ul>
 
       <AceEditor
         ref={aceEditor}
         onChange={handleChange}
         mode={modes[languageId]}
         theme="monokai"
-        // editorProps={{ $blockScrolling: true }}
+        editorProps={{ $blockScrolling: true }}
         showPrintMargin={false}
         showGutter={true}
         focus={true}
         fontSize={fontSize}
         highlightActiveLine={false}
         placeholder={"Write your code Here"}
+        width="100%"
         value={code}
         setOptions={{
           tabSize: 4,

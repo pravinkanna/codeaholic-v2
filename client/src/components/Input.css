@@ -1,12 +1,11 @@
-.input-component {
+.IdeInput {
   background: #15314b;
-  border-bottom: 15px solid red !important;
   height: 100%;
   width: 100%;
+  border-right: 15px solid #02203c;
 }
 
-.input-component p {
-  overflow: hidden;
+.IdeInput p {
   color: #ffffff;
   width: min-content;
   padding: 5px 20px;
@@ -15,14 +14,7 @@
   margin: 0;
 }
 
-.input-textarea {
-  height: 100%;
-  background: #001528;
-  overflow: hidden;
-}
-
-.input-component textarea {
-  overflow: hidden;
+.IdeInput textarea {
   /* Firefox */
   height: -moz-calc(100% - 2rem);
   /* WebKit */
@@ -33,7 +25,6 @@
   height: calc(100% - 2rem);
   width: 100%;
   font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif !important;
-  /* overflow: hidden; */
   padding: 20px 30px;
   background: #001528;
   color: #ffffff;

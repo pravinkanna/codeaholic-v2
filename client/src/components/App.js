@@ -1,9 +1,9 @@
 import React from "react";
-import { PageView, initGA } from './components/tracking';
+import { PageView, initGA } from '../tracking';
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { AuthProvider } from './contexts/AuthContext';
-import { IdeProvider } from './contexts/IdeContext';
-import Ide from "./components/Ide";
+import { AuthProvider } from '../contexts/AuthContext';
+import { IdeProvider } from '../contexts/IdeContext';
+import Ide from "./Ide";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
