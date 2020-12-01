@@ -9,6 +9,7 @@
   background: #001528 !important;
   height: 95% !important;
 }
+
 .ace_gutter {
   background: #001528 !important;
   z-index: 0;
@@ -23,7 +24,7 @@
   color: #8b8888 !important;
 }
 
-.IdeEditor .EditorNav {
+.IdeEditor .editor-header {
   display: flex;
   justify-content: space-between;
   margin: 0;
@@ -31,7 +32,15 @@
   list-style: none;
 }
 
-.IdeEditor ul li p {
+.IdeEditor .editor-nav {
+  display: flex;
+
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+}
+
+.IdeEditor .editor-title {
   color: #ffffff;
   width: min-content;
   padding: 5px 20px;

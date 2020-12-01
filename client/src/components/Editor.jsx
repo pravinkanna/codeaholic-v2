@@ -5,6 +5,7 @@ import { Button, Spinner } from "react-bootstrap";
 
 import { Event } from "../tracking";
 import { run } from "../apis/run";
+import { save } from "../apis/save";
 
 import "./Editor.css";
 
@@ -18,8 +19,8 @@ import "ace-builds/webpack-resolver";
 
 function IdeEditor(props) {
   const aceEditor = useRef(null);
-  const { languageId, fontSize, code, setCode, input, setIsError, isLoading, setOutput, setIsLoading } = useContext(IdeContext);
-
+  const { languageId, fontSize, code, setCode, input, setIsError, isRunning, isSaving, setOutput, setIsRunning, setIsSaving } = useContext(IdeContext);
+  const title = "TEST";
   const modes = {
     50: "c_cpp",
     54: "c_cpp",
@@ -34,9 +35,15 @@ function IdeEditor(props) {
     setCode(aceEditor.current.editor.getValue());
   };
 
-  const handleClick = () => {
+  const handleRun = () => {
     runCode();
-    Event("Run", "Code Run Button", "IDE_PAGE");
+    Event("Run", "Run Button", "IDE_PAGE");
+  };
+
+  const handleSave = () => {
+    console.log("SAVE1");
+    saveCode();
+    Event("Save", "Save Button", "IDE_PAGE");
   };
 
   useEffect(() => {
@@ -46,7 +53,7 @@ function IdeEditor(props) {
   const runCode = async () => {
     try {
       //Starting Spinner
-      setIsLoading(true);
+      setIsRunning(true);
 
       //Passing to run function
       const result = await run(languageId, code, input);
@@ -59,7 +66,24 @@ function IdeEditor(props) {
       result.data.data.status.id === 3 ? setIsError(false) : setIsError(true);
 
       //Stopping Spinner
-      setIsLoading(false);
+      setIsRunning(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const saveCode = async () => {
+    try {
+      //Starting Spinner
+      setIsSaving(true);
+
+      //Passing to run function
+      const result = await save(title, languageId, code);
+
+      console.log("SAVE result: ", result);
+
+      //Stopping Spinner
+      setIsSaving(false);
     } catch (err) {
       console.log(err);
     }
@@ -67,22 +91,21 @@ function IdeEditor(props) {
 
   return (
     <div className="IdeEditor IdeComponent">
-      <ul className="EditorNav">
-        <li>
-          <p>Your&nbsp;Code</p>
-        </li>
-        <li>
-          <Button variant="primary" size="sm" onClick={handleClick} disabled={isEmpty(code) || isLoading}>
-            {isLoading ? (
-              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-            ) : (
-              <>
-                <i className="fas fa-play"></i>&nbsp;&nbsp;Run
-              </>
-            )}
-          </Button>
-        </li>
-      </ul>
+      <div className="editor-header">
+        <p className="editor-title">Your&nbsp;Code</p>
+        <ul className="editor-nav">
+          <li>
+            <Button variant="primary" size="sm" onClick={handleSave} disabled={isEmpty(code) || isSaving}>
+              {isSaving ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : <i className="fas fa-save">&nbsp;&nbsp;Save</i>}
+            </Button>
+          </li>
+          <li>
+            <Button variant="success" size="sm" onClick={handleRun} disabled={isEmpty(code) || isRunning}>
+              {isRunning ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : <i className="fas fa-play">&nbsp;&nbsp;Run</i>}
+            </Button>
+          </li>
+        </ul>
+      </div>
 
       <AceEditor
         ref={aceEditor}

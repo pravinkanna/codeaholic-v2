@@ -6,7 +6,7 @@ import auth from "../apis/auth";
 
 import "./LoginModal.css";
 import { AuthContext } from "../contexts/AuthContext";
-// const logo = require("./googleLogo.svg");
+// const logo = require("../img/googleLogo.svg");
 
 export default function IdeLoginModal() {
   const [modalType, setModalType] = useState("login");
@@ -69,7 +69,9 @@ export default function IdeLoginModal() {
       const res = await auth.login(loginEmail, loginPassword);
       if (res.data === "Unauthorized") {
         setWrongLoginCredentials(true);
+        setRegistered(false);
       } else {
+        setRegistered(false);
         setWrongLoginCredentials(false);
         setIsAuthenticated(true);
         setLoginModalShow(false);
@@ -87,6 +89,7 @@ export default function IdeLoginModal() {
       } else {
         setWrongRegisterCredentials(false);
         setRegistered(true);
+        showLogin();
       }
     } else {
       setWrongRegisterCredentials(true);
@@ -114,7 +117,8 @@ export default function IdeLoginModal() {
           </Modal.Header>
           <Modal.Body>
             {wrongLoginCredentials ? loginErrorMsg : ""}
-            <Form onSubmit={submitLogin}>
+            {registered ? registerSuccessMsg : ""}
+            <Form>
               <Form.Group controlId="formLoginEmail">
                 <Form.Label>Email </Form.Label>
                 <Form.Control ref={loginEmailBox} onChange={handleLogin} type="email" placeholder="Enter email" value={loginEmail} />

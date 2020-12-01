@@ -4,7 +4,7 @@ import { Button, Navbar, Nav, DropdownButton, Dropdown } from "react-bootstrap";
 import { AuthContext } from "../contexts/AuthContext";
 import { IdeContext } from "../contexts/IdeContext";
 import "./Navbar.css";
-import logo from "./pkLogo.svg";
+import logo from "../img/pkLogo.svg";
 
 import auth from "../apis/auth";
 import { share } from "../apis/share";

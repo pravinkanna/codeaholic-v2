@@ -94,7 +94,7 @@ exports.getSaveProgram = async (req, res) => {
 //@access Private
 exports.saveProgram = async (req, res) => {
     try {
-
+        console.log("In SAve PROgRm");
         const save = new Save(req.body);
         await save.save();
         req.user.programs.push(save);

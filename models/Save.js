@@ -2,12 +2,16 @@ const mongoose = require('mongoose')
 
 //User Schema
 const SaveSchema = new mongoose.Schema({
-    program: {
+    title: {
         type: String,
         required: true,
     },
-    languageId: {
+    language_id: {
         type: Number,
+        required: true,
+    },
+    source_code: {
+        type: String,
         required: true,
     },
     createdAt: {

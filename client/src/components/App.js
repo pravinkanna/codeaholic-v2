@@ -7,6 +7,7 @@ import IdeInput from "./Input";
 import IdeOutput from "./Output";
 import IdeShareModal from "./ShareModal";
 import IdeLoginModal from "./LoginModal";
+import IdeSaveModal from "./saveModal";
 import "./App.css";
 
 import { PageView, initGA } from '../tracking';
