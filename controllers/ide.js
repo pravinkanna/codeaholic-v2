@@ -42,7 +42,7 @@ exports.deleteSubmission = async (req, res, next) => {
     const token = req.params.token;
     const result = await axios({
       "method": "DELETE",
-      "url": `http://codeaholic-api.pravinkanna.me/submissions/${token}`,
+      "url": `https://codeaholic-api.pravinkanna.me/submissions/${token}`,
       "headers": {
         "content-type": "application/octet-stream",
         "useQueryString": true
@@ -82,7 +82,7 @@ const createSubmission = async (language_id, source_code, stdin) => {
       source_code = source_code + phpReadlineFunction;
     const result = await axios({
       "method": "POST",
-      "url": "http://codeaholic-api.pravinkanna.me/submissions?base64_encoded=true",
+      "url": "https://codeaholic-api.pravinkanna.me/submissions?base64_encoded=true",
       "headers": {
         "content-type": "application/json",
         "accept": "application/json",
@@ -107,7 +107,7 @@ const getSubmission = async (token) => {
       await sleep(500);
       result = await axios({
         "method": "GET",
-        "url": `http://codeaholic-api.pravinkanna.me/submissions/${token}?base64_encoded=true`,
+        "url": `https://codeaholic-api.pravinkanna.me/submissions/${token}?base64_encoded=true`,
         "headers": {
           "content-type": "application/octet-stream",
           "useQueryString": true
