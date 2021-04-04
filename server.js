@@ -9,16 +9,16 @@ const path = require('path');
 const morgan = require('morgan');
 const chalk = require('chalk');
 
+//Load configs
+dotenv.config({ path: './config/config.env' });
+
 const app = express();
 const connectDB = require('./config/db');
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3000;
 
 const ide = require('./routes/ide');
 const user = require('./routes/user');
 
-
-//Load configs
-dotenv.config({ path: './config/config.env' });
 
 //Morgan middleware
 if (process.env.NODE_ENV === 'development') {
